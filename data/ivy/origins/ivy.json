@@ -1,0 +1,12 @@
+{
+    "$schema": "https://raw.githubusercontent.com/SnaveSutit/origins-mod-json-schemas/refs/heads/schemas/apoli/origin.json",
+    "powers": [
+        "ivy:socket",
+        "ivy:socket_scribe"
+    ],
+    "icon": { "item": "minecraft:iron_chestplate" },
+    "order": 0,
+    "impact": 2,
+    "name": "Ivy, Full-Conversion Cyborg",
+    "description": "Test build: augment socket only."
+}

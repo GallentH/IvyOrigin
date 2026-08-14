@@ -1,0 +1,9 @@
+{
+    "type": "origins:inventory",
+    "name": "Augment Socket",
+    "description": "Test socket for verifying NBT persistence.",
+    "container_type": "hopper",
+    "drop_on_death": false,
+    "recoverable": true,
+    "key": { "key": "key.origins.primary_active" }
+}

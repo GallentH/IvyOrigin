@@ -1,0 +1,16 @@
+{
+    "type": "origins:active_self",
+    "name": "Socket Scribe (test)",
+    "description": "Secondary active: writes lore onto whatever sits in the socket.",
+    "key": { "key": "key.origins.secondary_active" },
+    "cooldown": 10,
+    "entity_action": {
+        "type": "origins:modify_inventory",
+        "inventory_type": "power",
+        "power": "ivy:socket",
+        "item_action": {
+            "type": "origins:merge_nbt",
+            "nbt": "{display:{Lore:['{\"text\":\"Augmented by Ivy\",\"italic\":false,\"color\":\"aqua\"}']}}"
+        }
+    }
+}
