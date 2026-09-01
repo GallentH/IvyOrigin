@@ -1,0 +1,30 @@
+# Effective Health: The amount of damage needed to deplete Integrity
+scoreboard objectives add ivy.eHealth dummy
+# Max Armor: The highest the armor bonus can go
+scoreboard objectives add ivy.maxArmor dummy
+# Max HP Down: The most maxhp that may be removed from the player for low integrity
+scoreboard objectives add ivy.maxHPDown dummy
+# dmg: Player's current running damage taken total. Calculated on taking damage.
+scoreboard objectives add ivy.dmg minecraft.custom:minecraft.damage_taken
+# Previous dmg: Damage taken BEFORE current tick. dmg is stored here after math.
+scoreboard objectives add ivy.prevDmg dummy
+# maxInt: maximum integrity. May be removed, here as a constant.
+scoreboard objectives add ivy.maxInt dummy
+
+scoreboard objectives add ivy.mid dummy
+scoreboard objectives add ivy.stepA dummy
+scoreboard objectives add ivy.stepH dummy
+scoreboard objectives add ivy.const dummy
+scoreboard objectives add ivy.tmp dummy
+# hp: how many integrity points are equal to 1 damage.
+scoreboard objectives add ivy.hp dummy
+
+
+scoreboard players set #ivy.defaults ivy.eHealth 40
+scoreboard players set #ivy.defaults ivy.maxArmor 5
+scoreboard players set #ivy.defaults ivy.maxHPDown 6
+scoreboard players set #ivy.defaults ivy.maxInt 1000
+
+scoreboard players set #0 ivy.const 0
+scoreboard players set #2 ivy.const 2
+scoreboard players set #10 ivy.const 10

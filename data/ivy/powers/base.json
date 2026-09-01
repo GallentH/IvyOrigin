@@ -1,0 +1,46 @@
+{
+    "type": "origins:multiple",
+
+    "integrity":{
+        "type":"origins:resource",
+        "min":0,
+        "max":1000,
+        "start_value":1000,
+        "hud_render": {
+            "sprite_location": "origins:textures/gui/community/spiderkolo/resource_bar_02.png",
+            "bar_index": 0
+        }
+    },
+
+    "armorbonus":{
+        "type":"origins:resource",
+        "min": 0,
+        "max": 20,
+        "start_value":4,
+        "hud_render":{
+            "should_render":false
+        }
+    },
+
+    "healthreduction":{
+        "type":"origins:resource",
+        "min": 0,
+        "max": 20,
+        "start_value":0,
+        "hud_render":{
+            "should_render":false
+        }
+    },
+
+    "damaged":{
+        "type":"origins:action_when_taking_damage",
+        "entity_action":{
+            "type":"origins:execute_command",
+            "command":"function ivy:damage"
+        },
+        "cooldown":10
+
+    }
+
+
+}
