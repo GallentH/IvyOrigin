@@ -1,0 +1,111 @@
+{
+    "type": "origins:multiple",
+    "componentinv": {
+        "type": "origins:inventory",
+        "container_type": "hopper",
+        "drop_on_death": false,
+        "key": {
+            "key": "key.advancements"
+        },
+        "condition": {
+            "type": "origins:sneaking",
+            "inverted": true
+        }
+    },
+    "booster": {
+        "type": "origins:resource",
+        "min": 0,
+        "max": 1,
+        "start_value": 1
+    },
+    "booster_sprint": {
+        "type": "origins:conditioned_attribute",
+        "tick_rate": 3,
+        "condition": {
+            "type": "origins:and",
+            "conditions": [
+                {
+                    "type": "origins:sprinting"
+                },
+                {
+                    "type": "origins:resource",
+                    "resource": "*:cybernetics_booster",
+                    "comparison": "==",
+                    "compare_to": 1
+                }
+            ]
+        },
+        "modifier": {
+            "attribute": "minecraft:generic.movement_speed",
+            "operation": "multiply_base",
+            "value":0.2,
+            "name": "Agility Booster"
+        }
+    },
+    "sprintdrain":{
+        "type":"origins:action_over_time",
+        "entity_action":{
+            "type":"origins:change_resource",
+            "resource":"*:energy_energy",
+            "change":-33,
+            "operation":"add"
+        },
+        "condition":{"type":"origins:sprinting"}
+    },
+    "booster_jump": {
+        "type": "origins:modify_jump",
+        "entity_action": {
+            "type": "origins:change_resource",
+            "resource": "*:energy_energy",
+            "change": -125,
+            "operation": "add"
+        },
+        "modifier": {
+            "operation": "multiply_base_additive",
+            "value": 0.5
+        },
+        "condition": {
+            "type": "origins:and",
+            "conditions": [
+                {
+                    "type": "origins:climbing",
+                    "inverted": true
+                },
+                {
+                    "type": "origins:block_collision",
+                    "block_condition": {
+                        "type": "origins:fluid",
+                        "fluid_condition": {
+                            "type": "origins:in_tag",
+                            "tag": "minecraft:water"
+                        }
+                    },
+                    "inverted": true
+                },
+                {
+                    "type": "origins:block_collision",
+                    "block_condition": {
+                        "type": "origins:fluid",
+                        "fluid_condition": {
+                            "type": "origins:in_tag",
+                            "tag": "minecraft:lava"
+                        }
+                    },
+                    "inverted": true
+                },
+                {
+                    "type": "origins:resource",
+                    "resource": "*:*_booster",
+                    "comparison": "==",
+                    "compare_to": 1
+                },
+                {
+                    "type": "origins:resource",
+                    "resource": "*:energy_energy",
+                    "comparison": ">=",
+                    "compare_to": 125
+                }
+            ]
+        }
+    }
+}

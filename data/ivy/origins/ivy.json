@@ -1,12 +1,13 @@
 {
-    "$schema": "https://raw.githubusercontent.com/SnaveSutit/origins-mod-json-schemas/refs/heads/schemas/apoli/origin.json",
     "powers": [
-        "ivy:socket",
-        "ivy:socket_scribe"
+        "ivy:base",
+        "ivy:energy",
+        "ivy:ivysize",
+        "ivy:cybernetics"
     ],
     "icon": { "item": "minecraft:iron_chestplate" },
     "order": 0,
     "impact": 2,
     "name": "Ivy, Full-Conversion Cyborg",
-    "description": "Test build: augment socket only."
+    "description": "A formerly normal human almost killed in an accident. Now, she has been given new life, her body a hardened machine that needs maintenance."
 }

@@ -1,6 +1,9 @@
 {
     "type": "origins:multiple",
 
+    "name":"Cybernetic Body",
+    "description":"Durable metal frame, delicate components. Start off with an armor bonus, but damage depletes it. Eventually lose max health.",
+
     "integrity":{
         "type":"origins:resource",
         "min":0,
@@ -9,38 +12,86 @@
         "hud_render": {
             "sprite_location": "origins:textures/gui/community/spiderkolo/resource_bar_02.png",
             "bar_index": 0
-        }
-    },
+        },
 
+
+        "__Explained":[
+            "Integrity is the main resource the cyborg relies on.", 
+            "It represents long-term structural integrity of cybernetics.",
+            "At high values, it gives a bonus to armor. Low values reduce max hp", 
+            "As the player is damaged, integrity goes down, and does not restore with health.",
+            "Integrity may be restored with metal or by using an ability with a long cooldown"
+        ]
+
+
+    },
     "armorbonus":{
         "type":"origins:resource",
         "min": 0,
         "max": 20,
         "start_value":4,
-        "hud_render":{
-            "should_render":false
-        }
+
+        "__Explained":"This power gives an armor bonus when integrity is high. Value set in datapack"
     },
 
-    "healthreduction":{
+    "hpdown":{
         "type":"origins:resource",
-        "min": 0,
-        "max": 20,
+        "min": -20,
+        "max": 0,
         "start_value":0,
-        "hud_render":{
-            "should_render":false
+
+        "__Explained":"This value reduces max hp when integrity goes below half."
+    },
+
+    "setarmor":{
+        "type":"origins:modify_attribute",
+        "attribute":"minecraft:generic.armor",
+        "modifier":{
+            "operation":"add_base_early",
+            "value":0,
+            "resource":"*:*_armorbonus"
+        }
+    },
+    "sethp":{
+        "type":"origins:modify_attribute",
+        "attribute":"minecraft:generic.max_health",
+        "modifier":{
+            "operation":"add_base_early",
+            "value":0,
+            "resource":"*:*_hpdown"
         }
     },
 
     "damaged":{
-        "type":"origins:action_when_taking_damage",
+        "type":"origins:action_when_damage_taken",
         "entity_action":{
             "type":"origins:execute_command",
             "command":"function ivy:damage"
         },
-        "cooldown":10
+        "cooldown":1
+    },
 
+    "events":{
+        "type":"origins:action_on_callback",
+        "entity_action_added": {
+            "type":"origins:execute_command",
+            "command":"function ivy:gain"
+        },
+        "entity_action_respawned":
+        {
+            "type":"origins:and",
+            "actions":[
+                {
+                    "type":"origins:change_resource",
+                    "resource":"*:*_integrity",
+                    "change": 1000,
+                    "operation": "set"
+                },
+                {
+                    "type":"origins:execute_command",
+                    "command":"function ivy:gain"
+                }
+            ]
+        }
     }
-
-
 }

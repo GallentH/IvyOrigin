@@ -6,10 +6,11 @@ scoreboard objectives add ivy.maxArmor dummy
 scoreboard objectives add ivy.maxHPDown dummy
 # dmg: Player's current running damage taken total. Calculated on taking damage.
 scoreboard objectives add ivy.dmg minecraft.custom:minecraft.damage_taken
-# Previous dmg: Damage taken BEFORE current tick. dmg is stored here after math.
-scoreboard objectives add ivy.prevDmg dummy
 # maxInt: maximum integrity. May be removed, here as a constant.
 scoreboard objectives add ivy.maxInt dummy
+
+scoreboard objectives add ivy.maxRegen dummy
+scoreboard objectives add ivy.minRegen dummy
 
 scoreboard objectives add ivy.mid dummy
 scoreboard objectives add ivy.stepA dummy
@@ -24,7 +25,10 @@ scoreboard players set #ivy.defaults ivy.eHealth 40
 scoreboard players set #ivy.defaults ivy.maxArmor 5
 scoreboard players set #ivy.defaults ivy.maxHPDown 6
 scoreboard players set #ivy.defaults ivy.maxInt 1000
+scoreboard players set #ivy.defaults ivy.maxRegen 10
+scoreboard players set #ivy.defaults ivy.minRegen 3
 
 scoreboard players set #0 ivy.const 0
+scoreboard players set #1 ivy.const 1
 scoreboard players set #2 ivy.const 2
 scoreboard players set #10 ivy.const 10

@@ -1,0 +1,132 @@
+{
+    "type":"origins:multiple",
+
+    "name":"Soul-powered Core",
+    "description":"Ivy passively generates energy that can be used for cybernetic abilities. If it runs out while she's at no integrity, large consequences await.",
+
+    "energy":{
+        "type":"origins:resource",
+        "min":0,
+        "max":1000,
+        "start_value":1000,
+        "hud_render": {
+            "bar_index": 2
+        },
+        "min_action":{
+            "type":"origins:and",
+            "actions":[
+                {            
+                    "type":"origins:if_else",
+                    "condition":{
+                        "type":"origins:resource",
+                        "resource":"*:base_integrity",
+                        "comparison":"==",
+                        "compare_to":0
+                    },
+                    "if_action":{
+                        "type":"origins:change_resource",
+                        "resource":"*:*_powerdown",
+                        "change":1,
+                        "operation":"set"
+                    }
+                },
+                {
+                   "type":"origins:change_resource",
+                    "resource":"*:cybernetics_booster",
+                    "change":0,
+                    "operation":"set" 
+                }
+
+            ]
+        }
+    },
+
+    "powerdown": {
+        "type":"origins:resource",
+        "min":0,
+        "max":1,
+        "start_value":0
+    },
+
+    "powerup":{
+        "type":"origins:action_over_time",
+        "entity_action":{
+            "type":"origins:if_else",
+            "condition":{
+                "type":"origins:and",
+                "conditions":[
+                    {
+                        "type":"origins:resource",
+                        "resource":"*:*_powerdown",
+                        "comparison":"==",
+                        "compare_to":1
+                    },
+                    {
+                        "type":"origins:or",
+                        "conditions":[
+                            {
+                                "type":"origins:resource",
+                                "resource":"*:base_integrity",
+                                "comparison":">=",
+                                "compare_to":400
+                            }
+                        ]
+                    }
+                ]
+            },
+            "if_action":{
+                "type":"origins:change_resource",
+                "change":0,
+                "operation":"set",
+                "resource":"*:*_powerdown"
+            }
+        }
+    },
+
+
+    "regen":{
+        "type":"origins:action_over_time",
+        "entity_action":{
+            "type":"origins:if_else",
+            "condition":{
+                "type":"origins:resource",
+                "resource":"*:*_powerdown",
+                "comparison":"==",
+                "compare_to":0
+            },
+            "if_action":{
+                "type": "origins:modify_resource",
+                "modifier": {
+                    "operation": "add_base_early",
+                    "value": 0,
+                    "resource": "*:*_regenrate"
+                },
+                "resource": "*:*_energy"
+            },
+            "else_action":{
+                "type":"origins:change_resource",
+                "change":1,
+                "operation":"add",
+                "resource":"*:*_energy" 
+            }
+        },
+        "condition":{
+            "type":"origins:and",
+            "conditions":[
+                {
+                   "type":"origins:resource",
+                    "resource":"*:cybernetics_booster",
+                    "compare_to":0,
+                    "comparison":"==" 
+                }
+            ]
+        }
+    },
+
+    "regenrate":{
+        "type":"origins:resource",
+        "max":1000,
+        "min":0,
+        "start_value":10
+    }
+}
