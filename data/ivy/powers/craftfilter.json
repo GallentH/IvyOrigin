@@ -1,0 +1,12 @@
+{
+  "type": "origins:modify_crafting",
+  "recipe": "ivy:kit",
+  "condition": {
+    "type": "origins:origin",
+    "origin": "ivy:ivy",
+    "inverted": true
+  },
+  "result": {
+    "item": "minecraft:air"
+  }
+}

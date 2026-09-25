@@ -1,0 +1,40 @@
+Current guide:
+
+Convert:
+	Action On Item Use (or whatever kit does for repairs, conditioned by having netherbrick and sword, and kit has kitType: 0b) ->
+	Set variables for tier and durability:
+		Set ivy.const to the sword's damage tag
+		Set ivy.tmp to the SWORD's max durability based on tier
+		Operation @s ivy.tmp -= @s ivy.const
+		Operation @s ivy.tmp /= #2 ivy.const
+		set ivy.const to correct tier.
+		(MAY NEED TO CREATE NEW VARIABLES TO JUGGLE THESE, OR SET TIER IN SEPARATE COMMAND)
+	Remove kit and Sword (action to delete the items in the player's hands)
+	Call creation
+	
+Creation:
+	Entirely in MC functions ->
+	Get the data from scoreboard/resource/whatever, store it in storage
+	summon nether brick. Depending on tier, name becomes "<tier> Armblade"
+	Write tier into NBT tag
+	Write durability into nbt tag.
+	Write durability into lore. Format: "<durability>/<tier max>"
+	OPTIONAL: write durability bar in 20ths of a percentage like before? Likely leave this out if there's no way to do it cleanly
+	
+Repair:
+	Action On Block Use (conditioned by netherbrick in one hand where kitType > 0b, other hand is repair item matching tier, block is anvil)
+	Set variables for tier and durability. Add 25% durability. Cap at max durability.
+	Remove items
+	Call creation
+	
+Uninstall:
+	Action On Item Use (or whatever Kit's origin used for repairs, conditioned by netherbrick with kitType 0b, other hand NOT sword, and the installed tier resource is not 0) ->
+	Write from resources into scoreboard, or copy into creation resources
+	Delete empty kit
+	call creation
+	
+Install:
+	Action On Item Use (again, actually whatever Kit used. I want all of these abilities (except repair) require the player to hold right click for a bit. Conditioned by having kit in hand with type > 0b.) ->
+	Write tier from item into installed resource. Do so in origins if possible, and if it doesn't require huge if-else chain.
+	Delete item
+	

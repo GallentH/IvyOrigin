@@ -4,6 +4,7 @@
     "name":"Soul-powered Core",
     "description":"Ivy passively generates energy that can be used for cybernetic abilities. If it runs out while she's at no integrity, large consequences await.",
 
+
     "energy":{
         "type":"origins:resource",
         "min":0,
@@ -35,6 +36,37 @@
                     "resource":"*:cybernetics_booster",
                     "change":0,
                     "operation":"set" 
+                },
+                {
+                   "type":"origins:change_resource",
+                    "resource":"*:cybernetics_repair",
+                    "change":0,
+                    "operation":"set" 
+                },
+                {
+                   "type":"origins:change_resource",
+                    "resource":"*:cybernetics_armblade",
+                    "change":0,
+                    "operation":"set" 
+                },
+                {
+                   "type":"origins:change_resource",
+                    "resource":"*:cybernetics_vision",
+                    "change":0,
+                    "operation":"set" 
+                },
+                {
+                    "type":"origins:if_else",
+                    "condition":{
+                        "type":"origins:resource",
+                        "resource":"*:cybernetics_repair",
+                        "compare_to":1,
+                        "comparison":"=="
+                    },
+                    "if_action":{
+                        "type":"origins:trigger_cooldown",
+                        "power":"*:cybernetics_repair_energycd"
+                    }
                 }
 
             ]
@@ -116,6 +148,24 @@
                 {
                    "type":"origins:resource",
                     "resource":"*:cybernetics_booster",
+                    "compare_to":0,
+                    "comparison":"==" 
+                },
+                {
+                   "type":"origins:resource",
+                    "resource":"*:cybernetics_vision",
+                    "compare_to":0,
+                    "comparison":"==" 
+                },
+                {
+                   "type":"origins:resource",
+                    "resource":"*:cybernetics_armblade",
+                    "compare_to":0,
+                    "comparison":"==" 
+                },
+                {
+                   "type":"origins:resource",
+                    "resource":"*:cybernetics_repair",
                     "compare_to":0,
                     "comparison":"==" 
                 }

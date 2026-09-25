@@ -1,0 +1,12 @@
+{
+    "type":"origins:multiple",
+
+    "recipetest":{
+        "type":"origins:modify_crafting",
+        "recipe":"ivy:kit",
+        "item_action":{
+            "type":"origins:merge_nbt",
+            "nbt":"{kitType:0b,display:{Name:'{\"text\":\"Component Kit\",\"italic\":false}', Lore:['{\"text\":\"A kit of makeshift tools and parts.\"}','{\"text\":\"Used to disassemble a sword and make a blade\"}']}}"
+        }
+    }
+}

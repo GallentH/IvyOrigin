@@ -1,0 +1,19 @@
+{
+    "type": "minecraft:crafting_shaped",
+    "pattern": [
+        "ISI",
+        "ACH",
+        "ICI"
+    ],
+    "key": {
+        "I": { "item": "minecraft:iron_ingot" },
+        "S": { "item": "minecraft:stick" },
+        "A": { "item": "minecraft:iron_axe" },
+        "C": { "item": "minecraft:copper_ingot" },
+        "H": { "item": "minecraft:tripwire_hook" }
+    },
+    "result": {
+        "item": "minecraft:nether_brick",
+        "count": 1
+    }
+}

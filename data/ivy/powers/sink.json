@@ -1,0 +1,44 @@
+{
+    "name": "Heavy Swimmer",
+    "description": "Due to Ivy's metal body, she swims 50% slower than normal humans unless using the agility booster.",
+    "type":"origins:multiple",
+
+
+    "booster_sprintdrain":{
+        "type":"origins:action_over_time",
+        "entity_action":{
+            "type":"origins:change_resource",
+            "resource":"*:energy_energy",
+            "change":-33,
+            "operation":"add"
+        },
+        "condition":{
+            "type":"origins:and",
+            "conditions":[
+                {"type":"origins:swimming"},
+                {
+                    "type":"origins:resource",
+                    "resource":"*:cybernetics_booster",
+                    "comparison":"==",
+                    "compare_to":1
+                }
+            ]
+        }
+    },
+
+
+    "normalswim":{
+        "type": "origins:modify_swim_speed",
+        "modifier": {
+            "operation": "multiply_total",
+            "value": -0.5
+        },
+
+        "condition":{
+            "type":"origins:resource",
+            "resource":"*:cybernetics_booster",
+            "comparison":"==",
+            "compare_to":0
+        }
+    }
+}

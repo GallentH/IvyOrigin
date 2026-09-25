@@ -3,11 +3,12 @@
         "ivy:base",
         "ivy:energy",
         "ivy:ivysize",
-        "ivy:cybernetics"
+        "ivy:cybernetics",
+        "ivy:armblade"
     ],
     "icon": { "item": "minecraft:iron_chestplate" },
     "order": 0,
     "impact": 2,
-    "name": "Ivy, Full-Conversion Cyborg",
-    "description": "A formerly normal human almost killed in an accident. Now, she has been given new life, her body a hardened machine that needs maintenance."
+    "name": "Ivy, Revived Cyborg",
+    "description": "A formerly normal human killed in an accident, revived and improved through unnatural means. Now, she has been given new life, her body a hardened machine that needs maintenance."
 }

@@ -1,22 +1,232 @@
 {
     "type": "origins:multiple",
-    "componentinv": {
-        "type": "origins:inventory",
-        "container_type": "hopper",
-        "drop_on_death": false,
-        "key": {
-            "key": "key.advancements"
+    "name": "Cybernetics",
+    "description": "Ivy's cybernetic body comes with multiple useful abilities, though they all consume energy.",
+    "badges": [
+        {
+            "sprite": "minecraft:textures/item/iron_sword.png",
+            "text": "Arm Blade:\nCan convert vanilla swords into components that can be installed in her arm. These have half the durability and disappear on death."
         },
-        "condition": {
-            "type": "origins:sneaking",
-            "inverted": true
+        {
+            "sprite": "minecraft:textures/mob_effect/speed.png",
+            "text": "Agility Booster:\nIncreases speed while sprinting, and consumes extra energy to boost jumps."
+        },
+        {
+            "sprite": "minecraft:textures/mob_effect/night_vision.png",
+            "text": "Enhanced Optics:\nSlightly increases Ivy's ability to see in the dark."
+        },
+        {
+            "sprite": "minecraft:textures/item/netherite_scrap.png",
+            "text": "Repair:\nDrains a lot of energy over time to restore system integrity. \nInterupted and put on cooldown by taking damage."
+        }
+    ],
+    "selector": {
+        "type": "origins:resource",
+        "min": 0,
+        "max": 7,
+        "start_value": 1,
+        "hud_render": {
+            "sprite_location": "origins:textures/gui/community/spiderkolo/resource_bar_points_01.png",
+            "bar_index": 4
         }
     },
+    "primary": {
+        "type": "origins:active_self",
+        "entity_action": {
+            "type": "origins:if_else_list",
+            "actions": [
+                {
+                    "condition": {
+                        "type": "origins:or",
+                        "conditions": [
+                            {
+                                "type": "origins:resource",
+                                "resource": "*:*_selector",
+                                "comparison": "==",
+                                "compare_to": 4
+                            },
+                            {
+                                "type": "origins:resource",
+                                "resource": "*:energy_powerdown",
+                                "comparison": "==",
+                                "compare_to": 1
+                            }
+                        ]
+                    },
+                    "action": {
+                        "type": "origins:if_else",
+                        "condition": {
+                            "type":"origins:and",
+                            "conditions":[
+                                {
+                                    "type": "origins:resource",
+                                    "resource": "*:*_repair",
+                                    "comparison": "==",
+                                    "compare_to": 0
+                                },
+                                {
+                                    "type":"origins:resource",
+                                    "resource":"*:*_repair_energycd",
+                                    "comparison":"==",
+                                    "compare_to":0
+                                },
+                                {
+                                    "type":"origins:resource",
+                                    "resource":"*:*_repair_damagecd",
+                                    "comparison":"==",
+                                    "compare_to":0
+                                }
+                            ]
+                        },
+                        "if_action":{
+                            "type":"origins:change_resource",
+                            "change":1,
+                            "resource": "*:*_repair",
+                            "operation":"set"
+                        },
+                        "else_action":{
+                            "type":"origins:change_resource",
+                            "change":0,
+                            "resource": "*:*_repair",
+                            "operation":"set"
+                        }
+                    }
+                },
+                {
+                    "condition": {
+                        "type": "origins:resource",
+                        "resource": "*:*_selector",
+                        "comparison": "==",
+                        "compare_to": 1
+                    },
+                    "action": {
+                        "type": "origins:if_else",
+                        "condition": {
+                            "type": "origins:resource",
+                            "resource": "*:*_armblade",
+                            "comparison": "==",
+                            "compare_to": 0
+                        },
+                        "if_action":{
+                            "type":"origins:change_resource",
+                            "resource": "*:*_armblade",
+                            "change":1,
+                            "operation":"set"
+                        },
+                        "else_action":{
+                            "type":"origins:change_resource",
+                            "resource": "*:*_armblade",
+                            "change":0,
+                            "operation":"set"
+                        }
+                    }
+                },
+                {
+                    "condition": { "compare_to": 2, "type": "origins:resource", "resource": "*:*_selector", "comparison": "==" },
+                    "action": {
+                        "type": "origins:if_else",
+                        "condition": { "resource": "*:*_booster", "comparison": "==", "compare_to": 0, "type": "origins:resource" },
+                        "if_action":{ "resource": "*:*_booster", "change":1, "operation":"set", "type":"origins:change_resource" },
+                        "else_action":{ "resource": "*:*_booster", "change":0, "operation":"set", "type":"origins:change_resource" }
+                    }
+                },
+                {
+                    "condition": { "compare_to": 3, "type": "origins:resource", "resource": "*:*_selector", "comparison": "==" },
+                    "action": {
+                        "type": "origins:if_else",
+                        "condition": { "resource": "*:*_vision", "comparison": "==", "compare_to": 0, "type": "origins:resource" },
+                        "if_action":{ "resource": "*:*_vision", "change":1, "operation":"set", "type":"origins:change_resource" },
+                        "else_action":{ "resource": "*:*_vision", "change":0, "operation":"set", "type":"origins:change_resource" }
+                    }
+                }
+            ]
+        }
+    },
+
+
+    "secondary": {
+        "type": "origins:active_self",
+        "key": {
+            "key": "key.origins.secondary_active"
+        },
+        "entity_action": {
+            "type": "origins:if_else_list",
+            "actions": [
+                {
+                    "action": {
+                        "type": "origins:change_resource",
+                        "resource": "*:*_selector",
+                        "change": 4,
+                        "operation": "set"
+                    },
+                    "condition": {
+                        "type": "origins:and",
+                        "conditions": [
+                            {
+                                "type": "origins:sneaking"
+                            },
+                            {
+                                "type": "origins:resource",
+                                "resource": "*:*_selector",
+                                "compare_to": 1,
+                                "comparison": "<="
+                            }
+                        ]
+                    }
+                },
+                {
+                    "action": {
+                        "type": "origins:change_resource",
+                        "resource": "*:*_selector",
+                        "change": -1,
+                        "operation": "add"
+                    },
+                    "condition": {
+                        "type": "origins:sneaking"
+                    }
+                },
+                {
+                    "action": {
+                        "type": "origins:change_resource",
+                        "resource": "*:*_selector",
+                        "change": 1,
+                        "operation": "set"
+                    },
+                    "condition": {
+                        "type": "origins:resource",
+                        "resource": "*:*_selector",
+                        "compare_to": 4,
+                        "comparison": ">="
+                    }
+                },
+                {
+                    "action": {
+                        "type": "origins:change_resource",
+                        "resource": "*:*_selector",
+                        "change": 1,
+                        "operation": "add"
+                    },
+                    "condition": { "type": "origins:constant", "value": true }
+                }
+            ]
+        }
+    },
+
+
+    "armblade": {
+        "type": "origins:resource",
+        "min": 0,
+        "max": 1,
+        "start_value": 0
+    },
+
+
+
     "booster": {
         "type": "origins:resource",
         "min": 0,
         "max": 1,
-        "start_value": 1
+        "start_value": 0
     },
     "booster_sprint": {
         "type": "origins:conditioned_attribute",
@@ -29,7 +239,7 @@
                 },
                 {
                     "type": "origins:resource",
-                    "resource": "*:cybernetics_booster",
+                    "resource": "*:*_booster",
                     "comparison": "==",
                     "compare_to": 1
                 }
@@ -38,19 +248,32 @@
         "modifier": {
             "attribute": "minecraft:generic.movement_speed",
             "operation": "multiply_base",
-            "value":0.2,
+            "value": 0.2,
             "name": "Agility Booster"
         }
     },
-    "sprintdrain":{
-        "type":"origins:action_over_time",
-        "entity_action":{
-            "type":"origins:change_resource",
-            "resource":"*:energy_energy",
-            "change":-33,
-            "operation":"add"
+    "booster_sprintdrain": {
+        "type": "origins:action_over_time",
+        "entity_action": {
+            "type": "origins:change_resource",
+            "resource": "*:energy_energy",
+            "change": -33,
+            "operation": "add"
         },
-        "condition":{"type":"origins:sprinting"}
+        "condition": {
+            "type": "origins:and",
+            "conditions": [
+                {
+                    "type": "origins:sprinting"
+                },
+                {
+                    "type": "origins:resource",
+                    "resource": "*:*_booster",
+                    "comparison": "==",
+                    "compare_to": 1
+                }
+            ]
+        }
     },
     "booster_jump": {
         "type": "origins:modify_jump",
@@ -106,6 +329,132 @@
                     "compare_to": 125
                 }
             ]
+        }
+    },
+
+
+
+    "vision": {
+        "type": "origins:resource",
+        "min": 0,
+        "max": 1,
+        "start_value": 0
+    },
+    "vision_true": {
+        "type": "origins:night_vision",
+        "strength": 0.2,
+        "condition": {
+            "type": "origins:resource",
+            "resource": "*:*_vision",
+            "comparison": "==",
+            "compare_to": 1
+        }
+    },
+    "vision_drain": {
+        "type": "origins:action_over_time",
+        "entity_action": {
+            "type": "origins:change_resource",
+            "resource": "*:energy_energy",
+            "change": -20,
+            "operation": "add"
+        },
+        "condition": {
+            "type": "origins:resource",
+            "resource": "*:*_vision",
+            "comparison": "==",
+            "compare_to": 1
+        }
+    },
+
+
+    "repair": {
+        "type": "origins:resource",
+        "min": 0,
+        "max": 1,
+        "start_value": 0
+    },
+    "repair_main":{
+        "type":"origins:action_over_time",
+        "interval":20,
+        "entity_action":{
+            "type":"origins:and",
+            "actions":[
+                {
+                    "type":"origins:change_resource",
+                    "resource":"*:base_integrity",
+                    "change":10,
+                    "operation":"add"
+                },
+
+                {
+                    "type":"origins:change_resource",
+                    "resource":"*:energy_energy",
+                    "change":-50,
+                    "operation":"add"
+                },
+                {
+                    "type":"origins:execute_command",
+                    "command":"function ivy:recalc"
+                }
+            ]
+        },
+        "condition":{
+            "type":"origins:resource",
+            "comparison":"==",
+            "compare_to":1,
+            "resource":"*:*_repair"
+        }
+    },
+    "repair_cancel":{
+        "type":"origins:self_action_when_hit",
+        "entity_action":{
+            "type":"origins:and",
+            "actions":[
+                {
+                    "type":"origins:change_resource",
+                    "resource":"*:*_repair",
+                    "change":0,
+                    "operation":"set"
+                },
+                {
+                    "type":"origins:trigger_cooldown",
+                    "power":"*:*_repair_damagecd"
+                }
+            ],
+            "condition":{
+                "type":"origins:resource",
+                "comparison":"==",
+                "compare_to":1,
+                "resource":"*:*_repair"
+            }
+        }
+    },
+    "repair_damagecd":{
+        "type": "origins:cooldown",
+        "cooldown": 6000,
+        "hud_render": {
+            "sprite_location":"origins:textures/gui/community/huang/resource_bar_02.png",
+            "bar_index": 1,
+            "condition": {
+                "type": "origins:resource",
+                "power": "*:*_repair_damagecd",
+                "comparison": ">",
+                "compare_to": 0
+            }
+        }
+    },
+    "repair_energycd":{
+        "type": "origins:cooldown",
+        "cooldown": 1200,
+        "hud_render": {
+            "sprite_location":"origins:textures/gui/community/huang/resource_bar_02.png",
+            "bar_index": 1,
+            "condition": {
+                "type": "origins:resource",
+                "power": "*:*_repair_energycd",
+                "comparison": ">",
+                "compare_to": 0
+            }
         }
     }
 }
