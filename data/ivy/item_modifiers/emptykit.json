@@ -1,0 +1,19 @@
+[
+    {
+        "function": "set_name",
+        "entity":"this",
+        "name": {"text":"Component Kit","italic":false}
+    },
+    {
+        "function": "minecraft:set_lore",
+        "entity": "this",
+        "lore": [
+            {"text":"A kit of makeshift tools and parts.", "color": "white", "italic": false},
+            {"text":"Used to disassemble a sword and make a blade", "color": "white", "italic": false}
+        ]
+    },
+    {
+        "function": "set_nbt",
+        "tag": "{ivyMax:0b,kitType:0b,ivyDur:0b}"
+    }
+]

@@ -1,0 +1,40 @@
+[
+	{
+		"function":"minecraft:set_name",
+		"entity":"this",
+		"name":{
+			"text":"Netherite Armblade", 
+			"italic":false,
+			"color":"light_purple"
+		}
+	},
+	{
+		"function":"minecraft:set_lore",
+		"entity":"this",
+		"lore":[
+			{"text":"A dark blade attached to a mechanical frame.\nMade from a metal only found in these worlds.", "color":"white","italic":false},
+			[{"text":"Durability: ","color":"gray","italic":false},
+			{"score":{"name":"@s","objective":"ivy.swordDur"},"color":"green","italic":false},
+			{"text":"/66", "color":"gray", "italic":false}]
+		],
+		"replace":true
+	},
+	{
+		"function":"minecraft:set_nbt",
+		"tag":"{ivyMax:1016s,kitType:6b}"
+	},
+	{
+	  "function": "minecraft:copy_nbt",
+	  "source": {
+		"type": "minecraft:storage",
+		"source": "ivy:create"
+	  },
+	  "ops": [
+		{
+		  "source": "dur",
+		  "target": "ivyDur",
+		  "op": "replace"
+		}
+	  ]
+	}
+]

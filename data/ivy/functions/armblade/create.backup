@@ -1,0 +1,28 @@
+execute store result storage ivy:create tier byte 1 run scoreboard players get @s ivy.swordTier
+execute store result storage ivy:create dur short 1 run scoreboard players get @s ivy.swordDur
+
+#summon the item that will be a sword part
+execute at @s run summon minecraft:item ~ ~ ~ {PickupDelay:0s, Item:{id:"minecraft:nether_brick",Count:1b}, Tags:["ivy_sword"]}
+
+#data chain
+execute if score @s ivy.swordTier matches 1 run data modify entity @e[type=minecraft:item,tag=ivy_sword, limit=1, sort=nearest] Item.tag merge value {kitType: 1b, ivyMax: 30s, display:{Name:'{"text":"Wooden Armblade", "italic":false,"color":"#755821"}', Lore: ['{"text":"A wooden blade attached to a mechanical frame.\\nMade to fit inside a more complex machine.\\nA poor, if renewable, choice of material.", "color":"white"}']}}
+execute if score @s ivy.swordTier matches 2 run data modify entity @e[type=minecraft:item,tag=ivy_sword, limit=1, sort=nearest] Item.tag merge value {kitType: 2b, ivyMax: 66s, display:{Name:'{"text":"Stone Armblade", "italic":false,"color":"dark_gray"}', Lore: ['{"text":"A stone blade attached to a mechanical frame.\\nA cybernetic implant, crude, but functional.", "color":"white"}']}}
+execute if score @s ivy.swordTier matches 3 run data modify entity @e[type=minecraft:item,tag=ivy_sword, limit=1, sort=nearest] Item.tag merge value {kitType:3b, ivyMax:126s, display:{Name:'{"text":"Iron Armblade", "italic":false,"color":"gray"}', Lore: ['{"text":"A blade attached to a mechanical frame.\\nA hidden weapon designed for a rough city.", "color":"white"}']}}
+execute if score @s ivy.swordTier matches 4 run data modify entity @e[type=minecraft:item,tag=ivy_sword, limit=1, sort=nearest] Item.tag merge value {kitType: 4b, ivyMax: 16s, display:{Name:'{"text":"Golden Armblade", "italic":false,"color":"gold"}', Lore: ['{"text":"A golden blade attached to a mechanical frame.\\nHeavy and soft, this blade is more for show than protection.", "color":"white"}']}}
+execute if score @s ivy.swordTier matches 5 run data modify entity @e[type=minecraft:item,tag=ivy_sword, limit=1, sort=nearest] Item.tag merge value {kitType: 5b, ivyMax:781s, display:{Name:'{"text":"Diamond Armblade", "italic":false,"color":"aqua"}', Lore: ['{"text":"A gleaming blade attached to a mechanical frame.\\nRazor sharp and glittering.", "color":"white"}']}}
+execute if score @s ivy.swordTier matches 6 run data modify entity @e[type=minecraft:item,tag=ivy_sword, limit=1, sort=nearest] Item.tag merge value {kitType: 6b, ivyMax: 1016s, display:{Name:'{"text":"Netherite Armblade", "italic":false,"color":"light_purple"}', Lore: ['{"text":"A dark blade attached to a mechanical frame.\\nMade from a metal only found in these worlds.", "color":"white"}']}}
+
+#add durability from stored dur
+data modify entity @e[type=item,limit=1,sort=nearest,tag=ivy_sword] Item.tag.ivyDur set from storage ivy:create dur
+
+#use a text_display to resolve nbt data into text
+summon text_display ~ ~ ~ {Tags:["ivy_text"]}
+data modify entity @e[type=text_display,tag=ivy_text,limit=1] text set value '[{"text":"Durability: ","color":"gray","italic":false},{"nbt":"Item.tag.ivyDur","entity":"@e[type=item,limit=1,sort=nearest,tag=ivy_sword]","color":"green","italic":false},{"text":"/", "color":"gray", "italic":false},{"nbt":"Item.tag.ivyMax","entity":"@e[type=item,limit=1,sort=nearest,tag=ivy_sword]","color":"gray","italic":false}]'
+
+#put resolved text into item description
+data modify entity @e[tag=ivy_sword,limit=1,sort=nearest] Item.tag.display.Lore append from entity @e[tag=ivy_text,limit=1,sort=nearest] text
+
+#kill resolver
+kill @e[tag=ivy_text,limit=1,sort=nearest]
+
+execute if score @s ivy.hand = @s ivy.hand run function ivy:armblade/hand

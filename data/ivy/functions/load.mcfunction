@@ -20,6 +20,11 @@ scoreboard objectives add ivy.tmp dummy
 # hp: how many integrity points are equal to 1 damage.
 scoreboard objectives add ivy.hp dummy
 
+#Specifically only for creating the sword
+scoreboard objectives add ivy.swordTier dummy
+scoreboard objectives add ivy.swordDur dummy
+scoreboard objectives add ivy.hand dummy
+
 
 scoreboard players set #ivy.defaults ivy.eHealth 40
 scoreboard players set #ivy.defaults ivy.maxArmor 5

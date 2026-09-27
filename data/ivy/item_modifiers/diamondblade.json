@@ -1,0 +1,40 @@
+[
+	{
+		"function":"minecraft:set_name",
+		"entity":"this",
+		"name":{
+			"text":"Diamond Armblade", 
+			"italic":false,
+			"color":"aqua"
+		}
+	},
+	{
+		"function":"minecraft:set_lore",
+		"entity":"this",
+		"lore":[
+			{"text":"A gleaming blade attached to a mechanical frame.\\nRazor sharp and glittering.", "color":"white","italic":false},
+			[{"text":"Durability: ","color":"gray","italic":false},
+			{"score":{"name":"@s","objective":"ivy.swordDur"},"color":"green","italic":false},
+			{"text":"/66", "color":"gray", "italic":false}]
+		],
+		"replace":true
+	},
+	{
+		"function":"minecraft:set_nbt",
+		"tag":"{ivyMax:781s,kitType:5b}"
+	},
+	{
+	  "function": "minecraft:copy_nbt",
+	  "source": {
+		"type": "minecraft:storage",
+		"source": "ivy:create"
+	  },
+	  "ops": [
+		{
+		  "source": "dur",
+		  "target": "ivyDur",
+		  "op": "replace"
+		}
+	  ]
+	}
+]

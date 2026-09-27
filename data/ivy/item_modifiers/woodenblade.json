@@ -1,0 +1,40 @@
+[
+	{
+		"function":"minecraft:set_name",
+		"entity":"this",
+		"name":{
+			"text":"Wooden Armblade",
+			"italic":false,
+			"color":"#755821"
+		}
+	},
+	{
+		"function":"minecraft:set_lore",
+		"entity":"this",
+		"lore":[
+			{"text":"A wooden blade attached to a mechanical frame.\nMade to fit inside a more complex machine.\nA poor, if renewable, choice of material.", "color":"white", "italic":false},
+			[{"text":"Durability: ","color":"gray","italic":false},
+			{"score":{"name":"@s","objective":"ivy.swordDur"},"color":"green","italic":false},
+			{"text":"/30", "color":"gray", "italic":false}]
+		],
+		"replace":true
+	},
+	{
+		"function":"minecraft:set_nbt",
+		"tag":"{ivyMax:30b,kitType:1b}"
+	},
+	{
+	  "function": "minecraft:copy_nbt",
+	  "source": {
+		"type": "minecraft:storage",
+		"source": "ivy:create"
+	  },
+	  "ops": [
+		{
+		  "source": "dur",
+		  "target": "ivyDur",
+		  "op": "replace"
+		}
+	  ]
+	}
+]
