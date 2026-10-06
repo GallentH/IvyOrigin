@@ -3,5 +3,11 @@
     "modifier": {
         "operation": "multiply_total",
         "value": -0.5
+    },
+    "condition":{
+        "type":"apoli:resource",
+        "resource":"*:base_integrity",
+        "compare_to":500,
+        "comparison":"<"
     }
 }
