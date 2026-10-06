@@ -10,10 +10,11 @@
         "lore": [
             {"text":"A kit of makeshift tools and parts.", "color": "white", "italic": false},
             {"text":"Used to disassemble a sword and make a blade", "color": "white", "italic": false}
-        ]
+        ],
+        "replace": true
     },
     {
         "function": "set_nbt",
-        "tag": "{ivyMax:0b,kitType:0b,ivyDur:0b}"
+        "tag": "{ivyMax:0b,kitType:0b,ivyDur:0b,ivyKit:1b,ivyMend:0b,ivyRepairCost:0b}"
     }
 ]

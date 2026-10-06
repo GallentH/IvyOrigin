@@ -15,13 +15,13 @@
 			{"text":"A dark blade attached to a mechanical frame.\nMade from a metal only found in these worlds.", "color":"white","italic":false},
 			[{"text":"Durability: ","color":"gray","italic":false},
 			{"score":{"name":"@s","objective":"ivy.swordDur"},"color":"green","italic":false},
-			{"text":"/66", "color":"gray", "italic":false}]
+			{"text":"/1016", "color":"gray", "italic":false}]
 		],
 		"replace":true
 	},
 	{
 		"function":"minecraft:set_nbt",
-		"tag":"{ivyMax:1016s,kitType:6b}"
+		"tag":"{ivyMax:1016s,kitType:6b,ivyKit:1b}"
 	},
 	{
 	  "function": "minecraft:copy_nbt",
@@ -34,6 +34,11 @@
 		  "source": "dur",
 		  "target": "ivyDur",
 		  "op": "replace"
+		},
+		{
+			"source": "cost",
+			"target": "ivyRepairCost",
+			"op": "replace"
 		}
 	  ]
 	}

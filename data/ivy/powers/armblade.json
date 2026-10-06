@@ -1,4 +1,6 @@
 {
+    "$schema": "https://raw.githubusercontent.com/SnaveSutit/origins-mod-json-schemas/refs/heads/schemas/apoli/power.json",
+    "hidden": true,
     "type":"origins:multiple",
 
     "recipetest":{
@@ -7,6 +9,637 @@
         "item_action":{
             "type":"origins:modify",
             "modifier":"ivy:emptykit"
+        }
+    },
+
+    "damageval":{ "type": "apoli:resource", "max": 10, "min": 0 },
+    "durval":{ "type": "apoli:resource", "max": 2000, "min": 0, 
+        "min_action": {
+            "type": "apoli:and",
+            "actions": [
+                {
+                    "type": "apoli:change_resource",
+                    "change": 0,
+                    "operation": "set",
+                    "resource": "*:cybernetics_armblade"
+                },
+                {
+                    "type": "apoli:change_resource",
+                    "change": 0,
+                    "operation": "set",
+                    "resource": "*:*_tier"
+                },
+                {"type": "apoli:change_resource", "change": 0,"operation": "set","resource": "*:*_mending"},
+                {
+                    "type": "apoli:play_sound",
+                    "category": "players",
+                    "sound": "minecraft:entity.item.break"
+                },
+                {
+                    "type": "apoli:execute_command",
+                    "command": "title @s actionbar {\"text\":\"Your Armblade has shattered.\",\"color\":\"red\"}"
+                }
+            ]
+        }
+    },
+    "durmax":{ "type": "apoli:resource", "max": 2000, "min": 0 },
+    "tier":{ "type": "apoli:resource", "max": 6, "min": 0 },
+    "mending": {"type": "apoli:resource", "max": 1, "min": 0},
+    "repaircost": { "type": "apoli:resource", "min": 0, "max": 63 },
+
+    "activedamage":{
+        "type": "apoli:modify_attribute",
+        "attribute": "minecraft:generic.attack_damage",
+        "modifiers":[
+            {
+                "operation":"add_base_early",
+                "value": -1
+            },
+            {
+                "operation":"add_base_early",
+                "resource": "*:*_damageval",
+                "value": 2
+            }
+        ],
+        "condition": {
+            "type": "apoli:and",
+            "conditions": [
+                {
+                    "type": "apoli:resource",
+                    "resource": "*:cybernetics_armblade",
+                    "compare_to": 1,
+                    "comparison": "=="
+                },
+                {
+                    "type": "apoli:equipped_item",
+                    "equipment_slot": "mainhand",
+                    "item_condition": {
+                        "type": "apoli:empty"
+                    }
+                }
+            ]
+        }
+    },
+    "activespeed":{
+        "type": "apoli:modify_attribute",
+        "attribute": "minecraft:generic.attack_speed",
+        "modifier":{
+            "operation":"set_base",
+            "value": 1.6
+        },
+        "condition": {
+            "type": "apoli:and",
+            "conditions": [
+                {
+                    "type": "apoli:resource",
+                    "resource": "*:cybernetics_armblade",
+                    "compare_to": 1,
+                    "comparison": "=="
+                },
+                {
+                    "type": "apoli:equipped_item",
+                    "equipment_slot": "mainhand",
+                    "item_condition": {
+                        "type": "apoli:empty"
+                    }
+                }
+            ]
+        }
+    },
+
+
+    "bladehits":{
+        "condition":{
+            "type": "apoli:and",
+            "conditions": [
+                { "type": "apoli:resource", "resource": "*:cybernetics_armblade", "compare_to": 1, "comparison": "==" },
+                { "type": "apoli:equipped_item", "equipment_slot": "mainhand", "item_condition": { "type": "apoli:empty" } }
+            ]
+        },
+        "type": "apoli:action_on_hit",
+        "cooldown": 1,
+        "bientity_action": {
+            "type": "apoli:actor_action",
+            "action": {
+                "type": "apoli:and",
+                "actions": [
+                    {
+                        "type": "apoli:change_resource",
+                        "change": -25,
+                        "operation": "add",
+                        "resource": "*:energy_energy"
+                    },
+                    {
+                        "type": "apoli:change_resource",
+                        "change": -1,
+                        "operation": "add",
+                        "resource": "*:*_durval"
+                    }
+                ]
+            }
+        }
+    },
+
+    "releasecheck":{
+        "type":"origins:cooldown",
+        "cooldown":2
+    },
+    "kitcooldown":{
+        "type": "origins:cooldown",
+        "cooldown": 20,
+        "hud_render":{
+            "should_render": true,
+            "sprite_location": "origins:textures/gui/community/huang/resource_bar_02.png",
+            "bar_index": 1,
+            "condition": {
+                "type": "origins:resource",
+                "resource": "*:*_kitcooldown",
+                "compare_to": 0,
+                "comparison": ">"
+            }
+        }
+    },
+    
+
+    "usekit":{
+        "type":"origins:active_self",
+        "key":{
+            "key": "key.use",
+            "continuous": true
+        },
+        "cooldown": 1,
+        "entity_action": {
+            "type": "origins:trigger_cooldown",
+            "power": "*:*_releasecheck"
+        },
+        "condition": {
+            "type": "origins:and",
+            "conditions": [
+                {
+                    "type": "origins:moving",
+                    "inverted": true,
+                    "horizontally": true,
+                    "vertically": false
+                },
+                {
+                    "type": "origins:resource","compare_to": 0,"comparison": "==","resource": "*:*_kitcooldown"
+                },
+                {
+                    "type": "origins:or",
+                    "conditions": [
+                        {
+                            "type": "origins:equipped_item",
+                            "equipment_slot": "mainhand",
+                            "item_condition": {"type": "origins:nbt","nbt":"{ivyKit:1b}"}
+                        },
+                        {
+                            "type": "origins:equipped_item",
+                            "equipment_slot": "offhand",
+                            "item_condition": {"type": "origins:nbt","nbt":"{ivyKit:1b}"}
+                        }
+                    ]
+                }
+            ]
+        }
+    },
+    "kitdriver": {
+        "type": "origins:action_over_time",
+        "interval": 1,
+        "condition": {
+            "type": "apoli:and",
+            "conditions":[
+                {
+                    "type": "origins:resource",
+                    "compare_to": 0,
+                    "comparison": ">",
+                    "resource": "*:*_releasecheck"
+                },
+                {
+                    "type": "origins:moving",
+                    "inverted": true,
+                    "horizontally": true,
+                    "vertically": false
+                }
+            ]
+        },
+        "entity_action": {
+            "type": "apoli:change_resource",
+            "change": 1,
+            "operation": "add",
+            "resource": "*:*_kitmain"
+        },
+        "falling_action": {
+            "type": "apoli:and",
+            "actions": [
+                {
+                    "type": "apoli:change_resource",
+                    "change": 0,
+                    "operation": "set",
+                    "resource": "*:*_kitmain"
+                },
+                {
+                    "type": "apoli:trigger_cooldown",
+                    "power": "*:*_kitcooldown"
+                }
+            ]
+        }
+    },
+
+    "damage_reset":{
+        "type":"apoli:action_when_damage_taken",
+        "condition":{
+            "type": "origins:resource",
+            "resource":"*:*_releasecheck",
+            "compare_to":0,
+            "comparison":">"
+        },
+        "entity_action":{
+            "type": "apoli:and",
+            "actions":[
+                {
+                    "type": "apoli:change_resource",
+                    "change": 0,
+                    "operation": "set",
+                    "resource": "*:*_kitmain"
+                },
+                {
+                    "type": "apoli:trigger_cooldown",
+                    "power": "*:*_kitcooldown"
+                }
+            ]
+        },
+        "cooldown": 10
+    },
+
+    "blockprotect":{
+        "type": "apoli:prevent_block_use",
+        "condition": {
+            "type": "apoli:resource",
+            "compare_to": 0,
+            "comparison": ">",
+            "resource": "*:*_releasecheck"
+        },
+        "block_condition": {
+            "type": "apoli:constant",
+            "value": true
+        }
+    },
+    "kitmain":{
+        "type": "origins:resource",
+        "max": 60,
+        "min": 0,
+        "hud_render":{
+            "sprite_location":"origins:textures/gui/community/spiderkolo/resource_bar_02.png",
+            "bar_index":6,
+            "should_render": true,
+            "condition": {
+                "type": "origins:resource",
+                "compare_to": 0,
+                "comparison": ">",
+                "resource": "*:*_kitmain"
+            }
+        },
+        "max_action": {
+            "type": "apoli:and",
+            "actions": [
+                {
+                    "type": "apoli:if_else_list",
+                    "actions": [
+                        {
+                            "condition": 
+                            {
+                                "type": "origins:equipped_item",
+                                "equipment_slot": "mainhand",
+                                "item_condition": {
+                                    "type": "apoli:and",
+                                    "conditions": [
+                                        {"type": "origins:nbt","nbt":"{ivyKit:1b}"},
+                                        {"type": "apoli:nbt","nbt":"{kitType:0b}","inverted": true}
+                                    ]
+                                }
+                            },
+                            "action": {"type": "apoli:execute_command","command": "scoreboard players set @s ivy.hand 1"}
+                        },
+                        {
+                            "condition": {
+                                "type": "origins:equipped_item",
+                                "equipment_slot": "offhand",
+                                "item_condition": {
+                                    "type": "apoli:and",
+                                    "conditions": [
+                                        {"type": "origins:nbt","nbt":"{ivyKit:1b}"},
+                                        {"type": "apoli:nbt","nbt":"{kitType:0b}","inverted": true}
+                                    ]
+                                }
+                            },
+                            "action": {"type": "apoli:execute_command","command": "scoreboard players set @s ivy.hand 2"}
+                        },
+                        {
+                            "condition": 
+                            {
+                                "type": "origins:equipped_item",
+                                "equipment_slot": "mainhand",
+                                "item_condition":{"type": "origins:nbt","nbt":"{ivyKit:1b}"}
+                            },
+                            "action": {"type": "apoli:execute_command","command": "scoreboard players set @s ivy.hand 1"}
+                        },
+                        {
+                            "condition": {
+                                "type": "origins:equipped_item",
+                                "equipment_slot": "offhand",
+                                "item_condition":{"type": "origins:nbt","nbt":"{ivyKit:1b}"}
+                            },
+                            "action": {"type": "apoli:execute_command","command": "scoreboard players set @s ivy.hand 2"}
+                        }
+                    ]
+                },
+
+                {
+                    "type": "apoli:if_else_list",
+                    "actions": [
+                        {
+                            "condition": {
+                                "type": "apoli:or",
+                                "conditions": [
+                                    { "type": "apoli:and", "conditions": [ { "type": "apoli:scoreboard", "objective": "ivy.hand", "compare_to": 1, "comparison": "==" }, { "type":"apoli:equipped_item", "equipment_slot": "mainhand", "item_condition": { "type": "apoli:nbt", "nbt":"{kitType:0b}", "inverted": true } } ] },
+                                    { "type": "apoli:and", "conditions": [ { "type": "apoli:scoreboard", "objective": "ivy.hand", "compare_to": 2, "comparison": "==" }, { "type":"apoli:equipped_item", "equipment_slot": "offhand", "item_condition": { "type": "apoli:nbt", "nbt":"{kitType:0b}", "inverted": true } } ] }
+                                ]
+                            },
+                            "action": {
+                                "type": "apoli:and",
+                                "actions": [
+                                    {
+                                        "type": "apoli:execute_command",
+                                        "command": "function ivy:armblade/install"
+                                    },
+                                    {
+                                        "type": "apoli:if_else",
+                                        "condition": {"type": "apoli:scoreboard", "compare_to": 1,"comparison": "==","objective": "ivy.hand"},
+                                        "if_action": { "type": "apoli:modify_inventory", "slot": "weapon.mainhand", "item_action": {"type": "apoli:modify","modifier": "ivy:emptykit"} },
+                                        "else_action": { "type": "apoli:modify_inventory", "slot": "weapon.offhand", "item_action": {"type": "apoli:modify","modifier": "ivy:emptykit"} }
+                                    }
+                                ]
+                            }
+                        },
+                        {
+                            "condition": {
+                                "type": "apoli:or",
+                                "conditions": [
+                                    { "type": "apoli:and", "conditions": [ { "type": "apoli:scoreboard", "objective": "ivy.hand", "compare_to": 1, "comparison": "==" }, { "type": "apoli:equipped_item", "equipment_slot": "offhand", "item_condition": { "type": "apoli:ingredient", "ingredient":{ "tag": "ivy:blades" } } } ] },
+                                    { "type": "apoli:and", "conditions": [ { "type": "apoli:scoreboard", "objective": "ivy.hand", "compare_to": 2, "comparison": "==" }, { "type": "apoli:equipped_item", "equipment_slot": "mainhand", "item_condition": { "type": "apoli:ingredient", "ingredient":{ "tag": "ivy:blades" } } } ] }
+                                ]
+                            },
+                            "action": {
+                                "type":"apoli:execute_command",
+                                "command": "function ivy:armblade/convert"
+                            }
+                        },
+                        {
+                            "condition": {
+                                "type": "apoli:resource",
+                                "resource": "*:*_tier",
+                                "compare_to": 0,
+                                "comparison": "!="
+                            },
+                            "action": {
+                                "type": "apoli:execute_command",
+                                "command": "function ivy:armblade/uninstall"
+                            }
+                        }
+                    ]
+                },
+                {
+                    "type": "apoli:change_resource",
+                    "change": 0,
+                    "operation": "set",
+                    "resource": "*:*_kitmain"
+                },
+                {
+                    "type": "origins:trigger_cooldown",
+                    "power": "*:*_kitcooldown"
+                }
+            ]
+        }
+    },
+    "kitrepair":{
+        "type": "apoli:action_on_block_use",
+        "block_condition": {"type": "apoli:in_tag", "tag": "minecraft:anvil"},
+        "action_result": "success",
+        "condition": {
+            "type": "apoli:and",
+            "conditions": [
+                {
+                    "type": "apoli:or",
+                    "conditions": [
+                        {
+                            "type": "apoli:and",
+                            "conditions": [
+                                {
+                                    "type": "apoli:equipped_item",
+                                    "equipment_slot": "mainhand",
+                                    "item_condition": {
+                                        "type": "apoli:nbt",
+                                        "nbt": "{kitType:1b}"
+                                    }
+                                },
+                                {
+                                    "type": "apoli:equipped_item",
+                                    "equipment_slot": "offhand",
+                                    "item_condition": {
+                                        "type": "apoli:or",
+                                        "conditions": [
+                                            { "type": "apoli:ingredient", "ingredient": { "tag": "minecraft:planks" } },
+                                            { "type": "apoli:ingredient", "ingredient": { "tag": "minecraft:stone_tool_materials" } },
+                                            { "type": "apoli:ingredient", "ingredient": { "item": "minecraft:iron_ingot" } },
+                                            { "type": "apoli:ingredient", "ingredient": { "item": "minecraft:gold_ingot" } },
+                                            { "type": "apoli:ingredient", "ingredient": { "item": "minecraft:diamond" } },
+                                            { "type": "apoli:ingredient", "ingredient": { "item": "minecraft:netherite_ingot" } }
+
+                                        ]
+                                    }
+                                }
+                            ]
+                        },
+                        {
+                            "type": "apoli:and",
+                            "conditions": [
+                                {
+                                    "type": "apoli:equipped_item",
+                                    "equipment_slot": "offhand",
+                                    "item_condition": {
+                                        "type": "apoli:nbt",
+                                        "nbt": "{kitType:1b}"
+                                    }
+                                },
+                                {
+                                    "type": "apoli:equipped_item",
+                                    "equipment_slot": "mainhand",
+                                    "item_condition": {
+                                        "type": "apoli:or",
+                                        "conditions": [
+                                            { "type": "apoli:ingredient", "ingredient": { "tag": "minecraft:planks" } },
+                                            { "type": "apoli:ingredient", "ingredient": { "tag": "minecraft:stone_tool_materials" } },
+                                            { "type": "apoli:ingredient", "ingredient": { "item": "minecraft:iron_ingot" } },
+                                            { "type": "apoli:ingredient", "ingredient": { "item": "minecraft:gold_ingot" } },
+                                            { "type": "apoli:ingredient", "ingredient": { "item": "minecraft:diamond" } },
+                                            { "type": "apoli:ingredient", "ingredient": { "item": "minecraft:netherite_ingot" } }
+
+                                        ]
+                                    }
+                                }
+                            ]
+                        }   
+                    ]
+                },
+                {"type": "apoli:xp_levels", "compare_to": 1,"comparison": ">="},
+                { "type": "apoli:resource", "compare_to": 0, "comparison": "==", "resource": "*:*_kitcooldown" }
+            ]
+        },
+        "entity_action": {
+            "type": "apoli:and",
+            "actions": [
+                {
+                    "type": "apoli:if_else",
+                    "condition": 
+                    {
+                        "type": "origins:equipped_item",
+                        "equipment_slot": "mainhand",
+                        "item_condition":{"type": "origins:nbt","nbt":"{ivyKit:1b}"}
+                    },
+                    "if_action": {"type": "apoli:execute_command","command": "scoreboard players set @s ivy.hand 1"},
+                    "else_action": {"type": "apoli:execute_command","command": "scoreboard players set @s ivy.hand 2"}
+                },
+                {
+                    "type": "apoli:if_else",
+                    "condition": {"type": "apoli:sneaking"},
+                    "if_action": {
+                        "type": "apoli:execute_command",
+                        "command": "scoreboard players set @s ivy.repmode 1"
+                    },
+                    "else_action": {
+                        "type": "apoli:execute_command",
+                        "command": "scoreboard players set @s ivy.repmode 0"
+                    }
+                },
+                {
+                    "type": "apoli:execute_command",
+                    "command": "function ivy:armblade/repair/setup"
+                },
+                {"type": "apoli:trigger_cooldown","power": "*:*_kitcooldown"}
+            ]
+        }
+    },
+
+
+
+    "mend":{
+        "condition": {"type": "apoli:and","conditions": [
+            {"type": "apoli:resource", "resource": "*:*_mending", "compare_to": 1, "comparison": "=="},
+            {"type": "apoli:resource", "resource": "*:*_tier", "compare_to": 0,"comparison": ">"}
+        ]},
+        "type": "apoli:action_over_time",
+        "interval": 20,
+        "rising_action": {
+            "type": "apoli:execute_command", "command": "scoreboard players operation @s ivy.mendbase = @s ivy.xp"
+        },
+        "entity_action": {
+            "type": "apoli:execute_command","command": "function ivy:mending/update"
+        }
+    },
+
+    "kitmend":{
+        "type": "apoli:action_on_block_use",
+        "block_condition": {"type": "apoli:in_tag", "tag": "minecraft:anvil"},
+        "action_result": "success",
+        "condition": {
+            "type": "apoli:and",
+            "conditions": [
+                {
+                    "type": "apoli:or",
+                    "conditions": [
+                        {
+                            "type": "apoli:and",
+                            "conditions": [
+                                {
+                                    "type": "apoli:equipped_item",
+                                    "equipment_slot": "mainhand",
+                                    "item_condition": {
+                                        "type": "apoli:and",
+                                        "conditions": [
+                                            { "type": "apoli:nbt", "nbt": "{ivyKit:1b}"},
+                                            {"type": "apoli:nbt", "inverted": true, "nbt":"{kitType:0b}"},
+                                            {"type": "apoli:nbt", "inverted": true, "nbt":"{ivyMend:1b}"}
+                                        ]
+                                    }
+                                },
+                                {
+                                    "type": "apoli:equipped_item",
+                                    "equipment_slot": "offhand",
+                                    "item_condition": {
+                                        "type": "apoli:and",
+                                        "conditions": [
+                                            { "type": "apoli:ingredient", "ingredient": { "item": "minecraft:enchanted_book" } },
+                                            {"type": "apoli:nbt","nbt":"{StoredEnchantments:[{id:\"minecraft:mending\"}]}"}
+                                        ]
+                                    }
+                                }
+                            ]
+                        },
+                        {
+                            "type": "apoli:and",
+                            "conditions": [
+                                {
+                                    "type": "apoli:equipped_item",
+                                    "equipment_slot": "offhand",
+                                    "item_condition": {
+                                        "type": "apoli:and",
+                                        "conditions": [
+                                            { "type": "apoli:nbt", "nbt": "{ivyKit:1b}"},
+                                            {"type": "apoli:nbt", "inverted": true, "nbt":"{kitType:0b}"},
+                                            {"type": "apoli:nbt", "inverted": true, "nbt":"{ivyMend:1b}"}
+                                        ]
+                                    }
+                                },
+                                {
+                                    "type": "apoli:equipped_item",
+                                    "equipment_slot": "mainhand",
+                                    "item_condition": {
+                                        "type": "apoli:and",
+                                        "conditions": [
+                                            { "type": "apoli:ingredient", "ingredient": { "item": "minecraft:enchanted_book" } },
+                                            {"type": "apoli:nbt","nbt":"{StoredEnchantments:[{id:\"minecraft:mending\"}]}"}
+                                        ]
+                                    }
+                                }
+                            ]
+                        }
+                    ]
+                },
+                {"type": "apoli:xp_levels", "compare_to": 5,"comparison": ">="},
+                { "type": "apoli:resource", "compare_to": 0, "comparison": "==", "resource": "*:*_kitcooldown" }
+            ]
+        },
+        "entity_action": {
+            "type": "apoli:and",
+            "actions": [
+                {
+                    "type": "apoli:if_else",
+                    "condition": 
+                    {
+                        "type": "origins:equipped_item",
+                        "equipment_slot": "mainhand",
+                        "item_condition":{"type": "origins:nbt","nbt":"{ivyKit:1b}"}
+                    },
+                    "if_action": {"type": "apoli:execute_command","command": "scoreboard players set @s ivy.hand 1"},
+                    "else_action": {"type": "apoli:execute_command","command": "scoreboard players set @s ivy.hand 2"}
+                },
+                {"type": "apoli:execute_command", "command": "function ivy:split"},
+                { "type": "apoli:modify_inventory", "item_condition": { "type": "origins:nbt", "nbt": "{ivyKit:1b}" }, "slots": [ "weapon.mainhand", "weapon.offhand" ], "item_action": { "type": "apoli:modify", "modifier": "ivy:mending" } },
+                { "type": "apoli:modify_inventory", "item_condition": { "type": "origins:nbt", "nbt": "{ivyKit:1b}", "inverted": true }, "slots": [ "weapon.mainhand", "weapon.offhand" ], "item_action": { "type": "apoli:modify", "modifier": "ivy:subtract" } },
+
+                {"type": "apoli:trigger_cooldown","power": "*:*_kitcooldown"},
+                {"type": "apoli:add_xp","levels": -5}
+            ]
         }
     }
 }

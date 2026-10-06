@@ -1,4 +1,5 @@
 {
+    "$schema": "https://raw.githubusercontent.com/SnaveSutit/origins-mod-json-schemas/refs/heads/schemas/apoli/power.json",
     "type": "origins:multiple",
 
     "name":"Cybernetic Body",
@@ -90,6 +91,178 @@
                 {
                     "type":"origins:execute_command",
                     "command":"function ivy:gain"
+                }
+            ]
+        }
+    },
+
+    "releasecheck":{
+        "type":"origins:cooldown",
+        "cooldown":2
+    },
+    "repaircd":{
+        "type": "origins:cooldown",
+        "cooldown": 20,
+        "hud_render":{
+            "should_render": true,
+            "sprite_location": "origins:textures/gui/community/huang/resource_bar_02.png",
+            "bar_index": 1,
+            "condition": {
+                "type": "origins:resource",
+                "resource": "*:*_repaircd",
+                "compare_to": 0,
+                "comparison": ">"
+            }
+        }
+    },
+
+    "repairbutton":{
+        "type":"origins:active_self",
+        "key":{
+            "key": "key.spectatorOutlines",
+            "continuous": true
+        },
+        "cooldown": 1,
+        "entity_action": {
+            "type": "origins:trigger_cooldown",
+            "power": "*:*_releasecheck"
+        },
+        "condition": {
+            "type": "origins:and",
+            "conditions": [
+                {
+                    "type": "origins:moving",
+                    "inverted": true,
+                    "horizontally": true,
+                    "vertically": false
+                },
+                {
+                    "type": "origins:resource","compare_to": 0,"comparison": "==","resource": "*:*_repaircd"
+                },
+                {
+                    "type": "origins:or",
+                    "conditions": [
+                        {
+                            "type": "origins:equipped_item",
+                            "equipment_slot": "mainhand",
+                            "item_condition": {"type": "apoli:ingredient", "ingredient":{"tag": "ivy:repairmats"}}
+                        },
+                        {
+                            "type": "origins:equipped_item",
+                            "equipment_slot": "offhand",
+                            "item_condition": {"type": "apoli:ingredient", "ingredient":{"tag": "ivy:repairmats"}}
+                        }
+                    ]
+                },
+                { "type": "origins:resource", "resource": "*:*_integrity", "comparison": "<", "compare_to": 1000 }
+            ]
+        }
+    },
+    "repairdriver": {
+        "type": "origins:action_over_time",
+        "interval": 1,
+        "condition": {
+            "type": "apoli:and",
+            "conditions":[
+                {
+                    "type": "origins:resource",
+                    "compare_to": 0,
+                    "comparison": ">",
+                    "resource": "*:*_releasecheck"
+                },
+                {
+                    "type": "origins:moving",
+                    "inverted": true,
+                    "horizontally": true,
+                    "vertically": false
+                }
+            ]
+        },
+        "entity_action": {
+            "type": "apoli:change_resource",
+            "change": 1,
+            "operation": "add",
+            "resource": "*:*_repairmain"
+        },
+        "falling_action": {
+            "type": "apoli:and",
+            "actions": [
+                {
+                    "type": "apoli:change_resource",
+                    "change": 0,
+                    "operation": "set",
+                    "resource": "*:*_repairmain"
+                },
+                {
+                    "type": "apoli:trigger_cooldown",
+                    "power": "*:*_repaircd"
+                }
+            ]
+        }
+    },
+
+    "damage_reset":{
+        "type":"apoli:action_when_damage_taken",
+        "condition":{
+            "type": "origins:resource",
+            "resource":"*:*_releasecheck",
+            "compare_to":0,
+            "comparison":">"
+        },
+        "entity_action":{
+            "type": "apoli:and",
+            "actions":[
+                {
+                    "type": "apoli:change_resource",
+                    "change": 0,
+                    "operation": "set",
+                    "resource": "*:*_repairmain"
+                },
+                {
+                    "type": "apoli:trigger_cooldown",
+                    "power": "*:*_repaircd"
+                }
+            ]
+        },
+        "cooldown": 10
+    },
+    "repairmain":{
+        "type": "origins:resource",
+        "max": 60,
+        "min": 0,
+        "hud_render":{
+            "sprite_location":"origins:textures/gui/community/spiderkolo/resource_bar_02.png",
+            "bar_index":9,
+            "should_render": true,
+            "condition": {
+                "type": "origins:resource",
+                "compare_to": 0,
+                "comparison": ">",
+                "resource": "*:*_repairmain"
+            }
+        },
+        "max_action": {
+            "type": "apoli:and",
+            "actions": [
+                {
+                    "type": "apoli:if_else",
+                    "condition": { "type": "origins:equipped_item", "equipment_slot": "mainhand", "item_condition": { "type": "apoli:ingredient","ingredient":{"tag": "ivy:repairmats"} } },
+                    "if_action": {"type": "apoli:execute_command","command": "scoreboard players set @s ivy.hand 1"},
+                    "else_action": {"type": "apoli:execute_command","command": "scoreboard players set @s ivy.hand 2"}
+                },
+                {
+                    "type": "apoli:execute_command",
+                    "command": "function ivy:repair"
+                },
+                {
+                    "type": "apoli:change_resource",
+                    "change": 0,
+                    "operation": "set",
+                    "resource": "*:*_repairmain"
+                },
+                {
+                    "type": "origins:trigger_cooldown",
+                    "power": "*:*_repaircd"
                 }
             ]
         }

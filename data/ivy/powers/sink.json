@@ -1,4 +1,5 @@
 {
+    "$schema": "https://raw.githubusercontent.com/SnaveSutit/origins-mod-json-schemas/refs/heads/schemas/apoli/power.json",
     "name": "Heavy Swimmer",
     "description": "Due to Ivy's metal body, she swims 50% slower than normal humans unless using the agility booster.",
     "type":"origins:multiple",

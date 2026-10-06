@@ -1,4 +1,5 @@
 {
+    "$schema": "https://raw.githubusercontent.com/SnaveSutit/origins-mod-json-schemas/refs/heads/schemas/apoli/power.json",
     "type":"origins:multiple",
 
     "name":"Soul-powered Core",
@@ -21,8 +22,8 @@
                     "condition":{
                         "type":"origins:resource",
                         "resource":"*:base_integrity",
-                        "comparison":"==",
-                        "compare_to":0
+                        "comparison":"<=",
+                        "compare_to":150
                     },
                     "if_action":{
                         "type":"origins:change_resource",
@@ -36,6 +37,19 @@
                     "resource":"*:cybernetics_booster",
                     "change":0,
                     "operation":"set" 
+                },
+                {
+                    "type":"origins:if_else",
+                    "condition":{
+                        "type":"origins:resource",
+                        "resource":"*:cybernetics_repair",
+                        "compare_to":1,
+                        "comparison":"=="
+                    },
+                    "if_action":{
+                        "type":"origins:trigger_cooldown",
+                        "power":"*:cybernetics_repair_energycd"
+                    }
                 },
                 {
                    "type":"origins:change_resource",
@@ -54,19 +68,6 @@
                     "resource":"*:cybernetics_vision",
                     "change":0,
                     "operation":"set" 
-                },
-                {
-                    "type":"origins:if_else",
-                    "condition":{
-                        "type":"origins:resource",
-                        "resource":"*:cybernetics_repair",
-                        "compare_to":1,
-                        "comparison":"=="
-                    },
-                    "if_action":{
-                        "type":"origins:trigger_cooldown",
-                        "power":"*:cybernetics_repair_energycd"
-                    }
                 }
 
             ]
@@ -78,6 +79,61 @@
         "min":0,
         "max":1,
         "start_value":0
+    },
+
+    "darkness":{
+        "type": "apoli:action_over_time",
+        "rising_action": {
+            "type": "apoli:apply_effect",
+            "effect": {
+                "effect": "minecraft:darkness",
+                "duration": 100
+            }
+        },
+        "condition": {
+            "type": "apoli:and",
+            "conditions": [
+                {"type": "apoli:resource","compare_to": 1,"comparison": "==","resource": "*:*_powerdown"},
+                {"type": "apoli:resource","resource": "*:cybernetics_emergency","compare_to": 0,"comparison": "=="}
+            ]
+        },
+        "entity_action": {
+            "type": "apoli:apply_effect",
+            "effect": {
+                "effect": "minecraft:darkness",
+                "duration": 100
+            }
+        },
+        "falling_action": {
+            "type": "apoli:clear_effect",
+            "effect": "minecraft:darkness"
+        },
+        "interval": 20
+    },
+
+    "weakened":{
+        "type": "apoli:conditioned_attribute",
+        "tick_rate": 5,
+        "condition": {
+            "type": "apoli:and",
+            "conditions": [
+                {"type": "apoli:resource","compare_to": 1,"comparison": "==","resource": "*:*_powerdown"},
+                {"type": "apoli:resource","resource": "*:cybernetics_emergency","compare_to": 0,"comparison": "=="}
+            ]
+        },
+        "modifiers": [
+            {
+                "attribute": "minecraft:generic.attack_speed",
+                "operation": "multiply_total",
+                "value": -0.5
+            },
+
+            {
+                "attribute": "minecraft:generic.movement_speed",
+                "operation": "multiply_total",
+                "value": -0.25
+            }
+        ]
     },
 
     "powerup":{
@@ -98,19 +154,30 @@
                         "conditions":[
                             {
                                 "type":"origins:resource",
-                                "resource":"*:base_integrity",
-                                "comparison":">=",
-                                "compare_to":400
+                                "resource":"*:base_hpdown",
+                                "comparison":"==",
+                                "compare_to":0
                             }
                         ]
                     }
                 ]
             },
             "if_action":{
-                "type":"origins:change_resource",
-                "change":0,
-                "operation":"set",
-                "resource":"*:*_powerdown"
+                "type": "apoli:and",
+                "actions": [
+                    {
+                        "type": "origins:change_resource",
+                        "change": 0,
+                        "operation": "set",
+                        "resource": "*:*_powerdown"
+                    },
+                    {
+                        "type": "apoli:change_resource",
+                        "change": 0,
+                        "operation": "set",
+                        "resource": "*:cybernetics_emergency"
+                    }
+                ]
             }
         }
     },

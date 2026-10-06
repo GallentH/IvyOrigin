@@ -20,10 +20,22 @@ scoreboard objectives add ivy.tmp dummy
 # hp: how many integrity points are equal to 1 damage.
 scoreboard objectives add ivy.hp dummy
 
-#Specifically only for creating the sword
+#Specifically only for the armblade mechanics
 scoreboard objectives add ivy.swordTier dummy
 scoreboard objectives add ivy.swordDur dummy
 scoreboard objectives add ivy.hand dummy
+
+#To simulate mending
+scoreboard objectives add ivy.xp xp
+scoreboard objectives add ivy.mendbase dummy
+scoreboard objectives add ivy.mendwork dummy
+scoreboard objectives add ivy.mend dummy
+
+#repair tracking
+scoreboard objectives add ivy.repmode dummy
+scoreboard objectives add ivy.cost dummy
+scoreboard objectives add ivy.ingots dummy
+scoreboard objectives add ivy.levels dummy
 
 
 scoreboard players set #ivy.defaults ivy.eHealth 40
@@ -36,4 +48,5 @@ scoreboard players set #ivy.defaults ivy.minRegen 3
 scoreboard players set #0 ivy.const 0
 scoreboard players set #1 ivy.const 1
 scoreboard players set #2 ivy.const 2
+scoreboard players set #4 ivy.const 4
 scoreboard players set #10 ivy.const 10

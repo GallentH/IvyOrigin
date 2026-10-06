@@ -15,13 +15,13 @@
 			{"text":"A blade attached to a mechanical frame.\nA hidden weapon designed for a rough city.", "color":"white","italic":false},
 			[{"text":"Durability: ","color":"gray","italic":false},
 			{"score":{"name":"@s","objective":"ivy.swordDur"},"color":"green","italic":false},
-			{"text":"/66", "color":"gray", "italic":false}]
+			{"text":"/125", "color":"gray", "italic":false}]
 		],
 		"replace":true
 	},
 	{
 		"function":"minecraft:set_nbt",
-		"tag":"{ivyMax:126b,kitType:3b}"
+		"tag":"{ivyMax:125b,kitType:3b,ivyKit:1b}"
 	},
 	{
 	  "function": "minecraft:copy_nbt",
@@ -34,6 +34,11 @@
 		  "source": "dur",
 		  "target": "ivyDur",
 		  "op": "replace"
+		},
+		{
+			"source": "cost",
+			"target": "ivyRepairCost",
+			"op": "replace"
 		}
 	  ]
 	}

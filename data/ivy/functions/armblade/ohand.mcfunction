@@ -4,3 +4,5 @@ execute if score @s ivy.swordTier matches 3 run item modify entity @s weapon.off
 execute if score @s ivy.swordTier matches 4 run item modify entity @s weapon.offhand ivy:goldblade
 execute if score @s ivy.swordTier matches 5 run item modify entity @s weapon.offhand ivy:diamondblade
 execute if score @s ivy.swordTier matches 6 run item modify entity @s weapon.offhand ivy:netherblade
+
+execute if score @s ivy.mend matches 1 run item modify entity @s weapon.offhand ivy:mending

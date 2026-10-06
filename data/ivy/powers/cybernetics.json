@@ -1,11 +1,12 @@
 {
+    "$schema": "https://raw.githubusercontent.com/SnaveSutit/origins-mod-json-schemas/refs/heads/schemas/apoli/power.json",
     "type": "origins:multiple",
     "name": "Cybernetics",
     "description": "Ivy's cybernetic body comes with multiple useful abilities, though they all consume energy.",
     "badges": [
         {
             "sprite": "minecraft:textures/item/iron_sword.png",
-            "text": "Arm Blade:\nCan convert vanilla swords into components that can be installed in her arm. These have half the durability and disappear on death."
+            "text": "Arm Blade:\nCan convert vanilla swords into components that can be installed in her arm. These have half the durability and disappear on death, only work with an empty hand, and can be repaired at an anvil."
         },
         {
             "sprite": "minecraft:textures/mob_effect/speed.png",
@@ -17,7 +18,7 @@
         },
         {
             "sprite": "minecraft:textures/item/netherite_scrap.png",
-            "text": "Repair:\nDrains a lot of energy over time to restore system integrity. \nInterupted and put on cooldown by taking damage."
+            "text": "Repair:\nDrains a lot of energy over time to restore system integrity. \nInterupted and put on cooldown by taking damage, and much less efficient after 50% mark."
         }
     ],
     "selector": {
@@ -75,6 +76,18 @@
                                     "resource":"*:*_repair_damagecd",
                                     "comparison":"==",
                                     "compare_to":0
+                                },
+                                {
+                                    "type": "apoli:resource",
+                                    "compare_to": 50,
+                                    "comparison": ">=",
+                                    "resource": "*:energy_energy"
+                                },
+                                {
+                                    "type": "apoli:resource",
+                                    "compare_to": 750,
+                                    "comparison": "<",
+                                    "resource": "*:base_integrity"
                                 }
                             ]
                         },
@@ -94,10 +107,21 @@
                 },
                 {
                     "condition": {
-                        "type": "origins:resource",
-                        "resource": "*:*_selector",
-                        "comparison": "==",
-                        "compare_to": 1
+                        "type":"apoli:and",
+                        "conditions": [
+                            {
+                                "type": "origins:resource",
+                                "resource": "*:*_selector",
+                                "comparison": "==",
+                                "compare_to": 1
+                            },
+                            {
+                                "type": "apoli:resource",
+                                "resource": "*:energy_energy",
+                                "compare_to": 100,
+                                "comparison": ">"
+                            }
+                        ]
                     },
                     "action": {
                         "type": "origins:if_else",
@@ -108,10 +132,21 @@
                             "compare_to": 0
                         },
                         "if_action":{
-                            "type":"origins:change_resource",
-                            "resource": "*:*_armblade",
-                            "change":1,
-                            "operation":"set"
+                            "type": "origins:and",
+                            "actions": [
+                                {
+                                    "type":"origins:change_resource",
+                                    "resource": "*:*_armblade",
+                                    "change":1,
+                                    "operation":"set"
+                                },
+                                {
+                                    "type": "apoli:change_resource",
+                                    "resource": "*:energy_energy",
+                                    "change": -100,
+                                    "operation": "add"
+                                }
+                            ]
                         },
                         "else_action":{
                             "type":"origins:change_resource",
@@ -144,6 +179,143 @@
     },
 
 
+    "emergency":{
+        "type": "apoli:resource",
+        "max": 1,
+        "min": 0,
+        "start_value": 0
+    },
+
+    "blinded":{
+        "type": "apoli:action_over_time",
+        "condition": {"type": "apoli:resource","compare_to": 1,"comparison": "==","resource": "*:*_emergency"},
+        "rising_action": {
+            "type": "apoli:apply_effect",
+            "effect": {
+                "effect": "minecraft:blindness",
+                "duration": 100
+            }
+        },
+        "entity_action": {
+            "type": "apoli:apply_effect",
+            "effect": {
+                "effect": "minecraft:blindness",
+                "duration": 100
+            }
+        },
+        "falling_action": {
+            "type": "apoli:clear_effect",
+            "effect": "minecraft:blindness"
+        },
+        "interval": 20
+    },
+
+    "weakened":{
+        "type": "apoli:conditioned_attribute",
+        "tick_rate": 5,
+        "condition": {"type": "apoli:resource","compare_to": 1,"comparison": "==","resource": "*:energy_powerdown"},
+        "modifiers": [
+            {
+                "attribute": "minecraft:generic.attack_speed",
+                "operation": "multiply_total",
+                "value": -0.9
+            },
+            {
+                "attribute": "minecraft:generic.attack_damage",
+                "operation": "multiply_total",
+                "value": -1
+            },
+
+            {
+                "attribute": "minecraft:generic.movement_speed",
+                "operation": "multiply_total",
+                "value": -0.75
+            }
+        ]
+    },
+
+    "energyregen":{
+        "type": "apoli:action_over_time",
+        "interval": 20,
+        "condition": {
+            "type": "apoli:and",
+            "conditions": [
+                {
+                    "type": "apoli:resource",
+                    "resource": "*:*_emergency",
+                    "compare_to": 1,
+                    "comparison": "=="
+                },
+                {
+                    "type": "apoli:resource",
+                    "compare_to": 0,
+                    "comparison": "==",
+                    "resource": "*:*_repair"
+                }
+            ]
+        },
+        "entity_action": {
+            "type": "apoli:change_resource",
+            "change": 5,
+            "operation": "add",
+            "resource": "*:energy_energy"
+        }
+    },
+
+    "intregen":{
+        "type": "apoli:action_over_time",
+        "condition": {
+            "type": "apoli:resource",
+            "compare_to": 1,
+            "comparison": "==",
+            "resource": "*:*_emergency"
+        },
+        "entity_action": {
+            "type": "apoli:change_resource",
+            "change": 1,
+            "operation": "add",
+            "resource": "*:base_integrity"
+        },
+        "interval": 60
+    },
+
+    "emergencycd":{
+        "type": "apoli:cooldown",
+        "cooldown": 600,
+        "hud_render":{
+            "should_render": true,
+            "sprite_location": "origins:textures/gui/community/spiderkolo/resource_bar_02.png",
+            "bar_index": 14,
+            "condition": {
+                "type": "origins:resource",
+                "resource": "*:*_emergencycd",
+                "compare_to": 0,
+                "comparison": ">"
+            }
+        }
+
+    },
+
+    "exitemergency":{
+        "condition": {"type": "apoli:resource","compare_to": 1,"comparison": "==","resource": "*:*_emergency"},
+        "type": "apoli:self_action_when_hit",
+        "entity_action": {
+            "type": "apoli:and",
+            "actions": [
+                {
+                    "type": "apoli:change_resource",
+                    "change": 0,
+                    "operation": "set",
+                    "resource": "*:*_emergency"
+                },
+                {
+                    "type": "apoli:trigger_cooldown",
+                    "power": "*:*_emergencycd"
+                }
+            ]
+        }
+    },
+
     "secondary": {
         "type": "origins:active_self",
         "key": {
@@ -152,6 +324,31 @@
         "entity_action": {
             "type": "origins:if_else_list",
             "actions": [
+                {
+                    "condition": {"type": "apoli:resource","compare_to": 1,"comparison": "==","resource": "*:energy_powerdown"},
+                    "action": {
+                        "type": "apoli:if_else",
+                        "condition": {
+                            "type": "apoli:and",
+                            "conditions": [
+                                {"type": "apoli:resource","compare_to": 0,"comparison": "==","resource": "*:*_emergency"},
+                                {"type": "apoli:resource","compare_to": 0,"comparison": "==","resource": "*:*_emergencycd"}
+                            ]
+                        },
+                        "if_action": {
+                            "type": "apoli:change_resource",
+                            "change": 1,
+                            "operation": "set",
+                            "resource": "*:*_emergency"
+                        },
+                        "else_action": {
+                            "type": "apoli:change_resource",
+                            "change": 0,
+                            "operation": "set",
+                            "resource": "*:*_emergency"
+                        }
+                    }
+                },
                 {
                     "action": {
                         "type": "origins:change_resource",
@@ -376,27 +573,49 @@
     "repair_main":{
         "type":"origins:action_over_time",
         "interval":20,
-        "entity_action":{
-            "type":"origins:and",
-            "actions":[
-                {
-                    "type":"origins:change_resource",
-                    "resource":"*:base_integrity",
-                    "change":10,
-                    "operation":"add"
-                },
+        "entity_action": {
+            "type": "apoli:if_else",
+            "condition": {"type": "apoli:resource","compare_to": 750,"comparison": "<","resource": "*:base_integrity"},
+            "if_action": {
+                "type":"origins:and",
+                "actions":[
+                    {
+                        "type": "apoli:if_else",
+                        "condition": {
+                            "type": "apoli:resource",
+                            "compare_to": 500,
+                            "comparison": "<",
+                            "resource": "*:base_integrity"
+                        },
+                        "if_action": {
+                            "type":"origins:change_resource",
+                            "resource":"*:base_integrity",
+                            "change":10,
+                            "operation":"add"
+                        },
+                        "else_action": {
+                            "type": "apoli:change_resource",
+                            "resource": "*:base_integrity",
+                            "change": 2,
+                            "operation": "add"
+                        }
+                    },
 
-                {
-                    "type":"origins:change_resource",
-                    "resource":"*:energy_energy",
-                    "change":-50,
-                    "operation":"add"
-                },
-                {
-                    "type":"origins:execute_command",
-                    "command":"function ivy:recalc"
-                }
-            ]
+                    {
+                        "type":"origins:change_resource",
+                        "resource":"*:energy_energy",
+                        "change":-50,
+                        "operation":"add"
+                    },
+                    {
+                        "type":"origins:execute_command",
+                        "command":"function ivy:recalc"
+                    }
+                ]
+            },
+            "else_action": {
+                "type": "apoli:change_resource","change": 0,"operation": "set","resource": "*:*_repair"
+            }
         },
         "condition":{
             "type":"origins:resource",
@@ -420,13 +639,13 @@
                     "type":"origins:trigger_cooldown",
                     "power":"*:*_repair_damagecd"
                 }
-            ],
-            "condition":{
-                "type":"origins:resource",
-                "comparison":"==",
-                "compare_to":1,
-                "resource":"*:*_repair"
-            }
+            ]
+        },
+        "condition":{
+            "type":"origins:resource",
+            "comparison":"==",
+            "compare_to":1,
+            "resource":"*:*_repair"
         }
     },
     "repair_damagecd":{
@@ -437,7 +656,7 @@
             "bar_index": 1,
             "condition": {
                 "type": "origins:resource",
-                "power": "*:*_repair_damagecd",
+                "resource": "*:*_repair_damagecd",
                 "comparison": ">",
                 "compare_to": 0
             }
@@ -451,7 +670,7 @@
             "bar_index": 1,
             "condition": {
                 "type": "origins:resource",
-                "power": "*:*_repair_energycd",
+                "resource": "*:*_repair_energycd",
                 "comparison": ">",
                 "compare_to": 0
             }

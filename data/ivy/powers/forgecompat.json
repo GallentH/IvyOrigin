@@ -1,0 +1,16 @@
+{
+    "$schema": "https://raw.githubusercontent.com/SnaveSutit/origins-mod-json-schemas/refs/heads/schemas/apoli/power.json",
+    "type": "apoli:multiple",
+     "hidden": true,
+    "startup": {
+        "type": "origins:action_on_callback",
+        "entity_action_added": {
+            "type": "apoli:and",
+            "actions": [
+                { "type": "origins:change_resource", "resource": "ivy:cybernetics_repair_damagecd", "change": 0, "operation": "set" },
+                { "type": "origins:change_resource", "resource": "ivy:cybernetics_repair_energycd", "change": 0, "operation": "set" },
+                { "type": "origins:change_resource", "resource": "ivy:cybernetics_emergencycd", "change": 0, "operation": "set" }
+            ]
+        }
+    }
+}

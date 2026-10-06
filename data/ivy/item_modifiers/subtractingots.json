@@ -1,0 +1,10 @@
+{
+    "function": "minecraft:set_count",
+    "add": true,
+    "count": {
+        "type": "minecraft:score",
+        "target": "this",
+        "score": "ivy.ingots",
+        "scale": -1
+    }
+}

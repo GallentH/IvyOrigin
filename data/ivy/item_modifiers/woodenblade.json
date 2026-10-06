@@ -21,7 +21,7 @@
 	},
 	{
 		"function":"minecraft:set_nbt",
-		"tag":"{ivyMax:30b,kitType:1b}"
+		"tag":"{ivyMax:30b,kitType:1b,ivyKit:1b}"
 	},
 	{
 	  "function": "minecraft:copy_nbt",
@@ -34,6 +34,11 @@
 		  "source": "dur",
 		  "target": "ivyDur",
 		  "op": "replace"
+		},
+		{
+			"source": "cost",
+			"target": "ivyRepairCost",
+			"op": "replace"
 		}
 	  ]
 	}

@@ -1,0 +1,11 @@
+[
+    {
+        "function": "set_nbt",
+        "tag": "{ivyMend:1b}"
+    },
+    {
+        "function": "set_lore",
+        "lore": [{"text": "Mending","color": "green","italic": false}],
+        "replace": false
+    }
+]

@@ -4,7 +4,8 @@
         "ivy:energy",
         "ivy:ivysize",
         "ivy:cybernetics",
-        "ivy:armblade"
+        "ivy:armblade",
+        "ivy:forgecompat"
     ],
     "icon": { "item": "minecraft:iron_chestplate" },
     "order": 0,

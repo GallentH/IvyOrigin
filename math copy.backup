@@ -1,0 +1,11 @@
+execute store result score @s ivy.swordDur run data get storage ivy:create item.ivyDur
+execute store result score @s ivy.tmp run data get storage ivy:create item.ivyMax
+scoreboard players operation @s ivy.const = @s ivy.tmp
+scoreboard players operation @s ivy.tmp /= #4 ivy.const
+scoreboard players operation @s ivy.swordDur += @s ivy.tmp
+#execute store result score @s ivy.tmp run data get storage ivy:create item.ivyMax
+scoreboard players operation @s ivy.swordDur < @s ivy.const
+
+function ivy:armblade/create
+execute if score @s ivy.hand matches 1 run item modify entity @s weapon.offhand ivy:subtract
+execute if score @s ivy.hand matches 2 run item modify entity @s weapon.mainhand ivy:subtract
