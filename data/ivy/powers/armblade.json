@@ -385,6 +385,19 @@
                             "condition": {
                                 "type": "apoli:or",
                                 "conditions": [
+                                    { "type": "apoli:and", "conditions": [ { "type": "apoli:scoreboard", "objective": "ivy.hand", "compare_to": 1, "comparison": "==" }, { "type": "apoli:equipped_item", "equipment_slot": "offhand", "item_condition": { "type": "apoli:nbt", "nbt": "{ivySalvage:1b}" } } ] },
+                                    { "type": "apoli:and", "conditions": [ { "type": "apoli:scoreboard", "objective": "ivy.hand", "compare_to": 2, "comparison": "==" }, { "type": "apoli:equipped_item", "equipment_slot": "mainhand", "item_condition": { "type": "apoli:nbt", "nbt": "{ivySalvage:1b}" } } ] }
+                                ]
+                            },
+                            "action": {
+                                "type":"apoli:execute_command",
+                                "command": "function ivy:armblade/fixsalvage"
+                            }
+                        },
+                        {
+                            "condition": {
+                                "type": "apoli:or",
+                                "conditions": [
                                     { "type": "apoli:and", "conditions": [ { "type": "apoli:scoreboard", "objective": "ivy.hand", "compare_to": 1, "comparison": "==" }, { "type": "apoli:equipped_item", "equipment_slot": "offhand", "item_condition": { "type": "apoli:ingredient", "ingredient":{ "tag": "ivy:blades" } } } ] },
                                     { "type": "apoli:and", "conditions": [ { "type": "apoli:scoreboard", "objective": "ivy.hand", "compare_to": 2, "comparison": "==" }, { "type": "apoli:equipped_item", "equipment_slot": "mainhand", "item_condition": { "type": "apoli:ingredient", "ingredient":{ "tag": "ivy:blades" } } } ] }
                                 ]

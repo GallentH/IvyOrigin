@@ -23,7 +23,9 @@ execute if score @s ivy.hand matches 2 store result score @s ivy.tmp run data ge
 scoreboard players operation @s ivy.swordDur -= @s ivy.tmp
 scoreboard players operation @s ivy.swordDur /= #2 ivy.const
 
-scoreboard players set @s ivy.mend 0
+execute if score @s ivy.hand matches 1 store success score @s ivy.mend if data entity @s Inventory[{Slot:-106b}].tag.Enchantments[{id:"minecraft:mending"}]
+execute if score @s ivy.hand matches 2 store success score @s ivy.mend if data entity @s SelectedItem.tag.Enchantments[{id:"minecraft:mending"}]
+
 scoreboard players set @s ivy.cost 0
 
 function ivy:armblade/create

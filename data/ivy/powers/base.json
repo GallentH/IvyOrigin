@@ -83,12 +83,6 @@
             "type":"origins:and",
             "actions":[
                 {
-                    "type":"origins:change_resource",
-                    "resource":"*:*_integrity",
-                    "change": 1000,
-                    "operation": "set"
-                },
-                {
                     "type":"origins:execute_command",
                     "command":"function ivy:gain"
                 }

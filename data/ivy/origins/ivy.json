@@ -5,7 +5,8 @@
         "ivy:ivysize",
         "ivy:cybernetics",
         "ivy:armblade",
-        "ivy:forgecompat"
+        "ivy:forgecompat",
+        "ivy:deathreset"
     ],
     "icon": { "item": "minecraft:iron_chestplate" },
     "order": 0,
