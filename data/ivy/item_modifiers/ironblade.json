@@ -12,7 +12,8 @@
 		"function":"minecraft:set_lore",
 		"entity":"this",
 		"lore":[
-			{"text":"A blade attached to a mechanical frame.\nA hidden weapon designed for a rough city.", "color":"white","italic":false},
+			{"text":"A blade attached to a mechanical frame.", "color":"white","italic":false},
+			{"text":"A hidden weapon designed for a rough city.", "color":"white","italic":false},
 			[{"text":"Durability: ","color":"gray","italic":false},
 			{"score":{"name":"@s","objective":"ivy.swordDur"},"color":"green","italic":false},
 			{"text":"/125", "color":"gray", "italic":false}]

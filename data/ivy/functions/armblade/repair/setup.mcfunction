@@ -2,6 +2,9 @@ function ivy:split
 execute if score @s ivy.hand matches 1 run data modify storage ivy:create item set from entity @s SelectedItem.tag
 execute if score @s ivy.hand matches 2 run data modify storage ivy:create item set from entity @s Inventory[{Slot:-106b}].tag
 
+execute store result score @s ivy.tmp run data get storage ivy:create item.salvWorn
+execute if score @s ivy.tmp matches 1 run function ivy:armblade/repair/rework
+execute if score @s ivy.tmp matches 1 run return 0
 
 execute store result score @s ivy.swordTier run data get storage ivy:create item.kitType
 execute store result score @s ivy.mend run data get storage ivy:create item.ivyMend

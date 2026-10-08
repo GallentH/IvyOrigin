@@ -1,0 +1,5 @@
+[
+  { "function": "set_nbt", "tag": "{salvWorn:1b}" },
+  { "function": "set_lore", "replace": false, "lore": [
+      {"text":"Damaged during extraction. Repair at an anvil","color":"red","italic":false} ] }
+]

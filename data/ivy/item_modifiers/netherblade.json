@@ -12,7 +12,8 @@
 		"function":"minecraft:set_lore",
 		"entity":"this",
 		"lore":[
-			{"text":"A dark blade attached to a mechanical frame.\nMade from a metal only found in these worlds.", "color":"white","italic":false},
+			{"text":"A dark blade attached to a mechanical frame.", "color":"white","italic":false},
+			{"text":"Made from a metal only found in these worlds.", "color":"white","italic":false},
 			[{"text":"Durability: ","color":"gray","italic":false},
 			{"score":{"name":"@s","objective":"ivy.swordDur"},"color":"green","italic":false},
 			{"text":"/1016", "color":"gray", "italic":false}]

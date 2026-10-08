@@ -1,0 +1,6 @@
+execute if score @s ivy.swordTier matches 1 run data modify storage ivy:create salvage.name set value "Wood"
+execute if score @s ivy.swordTier matches 2 run data modify storage ivy:create salvage.name set value "Stone"
+execute if score @s ivy.swordTier matches 3 run data modify storage ivy:create salvage.name set value "Iron"
+execute if score @s ivy.swordTier matches 4 run data modify storage ivy:create salvage.name set value "Gold"
+execute if score @s ivy.swordTier matches 5 run data modify storage ivy:create salvage.name set value "Diamond"
+execute if score @s ivy.swordTier matches 6 run data modify storage ivy:create salvage.name set value "Netherite"

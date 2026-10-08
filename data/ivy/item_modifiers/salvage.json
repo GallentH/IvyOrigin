@@ -1,0 +1,16 @@
+[
+  { "function": "set_name", "name": {"text":"Salvaged Armblade","italic":false,"color":"gray"} },
+  { "function": "set_lore", "entity": "this", "replace": true, "lore": [
+      {"text":"The salvaged remains of an armblade, somehow not lost.","color":"dark_gray","italic":false},
+      {"text":"Perhaps it can be reinstalled with a kit.","color":"dark_gray","italic":false},
+      [{"text": "Material: ","color":"gray", "italic": false},{"nbt":"salvage.name","storage":"ivy:create","color":"gray","italic":false}],
+      [{"text":"Durability: ","color":"gray","italic":false},{"score":{"name":"@s","objective":"ivy.swordDur"},"color":"green","italic":false}]
+  ]},
+  { "function": "set_nbt", "tag": "{ivySalvage:1b,salvWorn:0b}" },
+  { "function": "copy_nbt", "source": {"type":"minecraft:storage","source":"ivy:create"}, "ops": [
+      {"source":"salvage.tier","target":"salvTier","op":"replace"},
+      {"source":"salvage.dur","target":"salvDur","op":"replace"},
+      {"source":"salvage.cost","target":"salvCost","op":"replace"}
+      
+  ]}
+]

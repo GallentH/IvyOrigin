@@ -12,7 +12,8 @@
 		"function":"minecraft:set_lore",
 		"entity":"this",
 		"lore":[
-			{"text":"A stone blade attached to a mechanical frame.\nA cybernetic implant, crude, but functional.", "color":"white", "italic": false},
+			{"text":"A stone blade attached to a mechanical frame.", "color":"white", "italic": false},
+			{"text":"A cybernetic implant, crude, but functional.", "color":"white", "italic": false},
 			[{"text":"Durability: ","color":"gray","italic":false},
 			{"score":{"name":"@s","objective":"ivy.swordDur"},"color":"green","italic":false},
 			{"text":"/66", "color":"gray", "italic":false}]

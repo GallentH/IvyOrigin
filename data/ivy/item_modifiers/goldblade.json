@@ -12,7 +12,8 @@
 		"function":"minecraft:set_lore",
 		"entity":"this",
 		"lore":[
-			{"text":"A golden blade attached to a mechanical frame.\nHeavy and soft, this blade is more for show than protection.", "color":"white","italic":false},
+			{"text":"A golden blade attached to a mechanical frame.", "color":"white","italic":false},
+			{"text":"Heavy and soft, this blade is more for show than protection.", "color":"white","italic":false},
 			[{"text":"Durability: ","color":"gray","italic":false},
 			{"score":{"name":"@s","objective":"ivy.swordDur"},"color":"green","italic":false},
 			{"text":"/16", "color":"gray", "italic":false}]

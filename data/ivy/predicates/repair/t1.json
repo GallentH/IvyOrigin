@@ -1,0 +1,13 @@
+{
+  "condition": "minecraft:any_of",
+  "terms": [
+    {"condition":"minecraft:entity_properties","entity":"this","predicate":{"equipment":{
+      "mainhand":{"nbt":"{kitType:1b}"}, "offhand":{"tag":"minecraft:planks"}}}},
+    {"condition":"minecraft:entity_properties","entity":"this","predicate":{"equipment":{
+      "offhand":{"nbt":"{kitType:1b}"}, "mainhand":{"tag":"minecraft:planks"}}}},
+    {"condition":"minecraft:entity_properties","entity":"this","predicate":{"equipment":{
+      "mainhand":{"nbt":"{salvTier:1b,salvWorn:1b}"}, "offhand":{"tag":"minecraft:planks"}}}},
+    {"condition":"minecraft:entity_properties","entity":"this","predicate":{"equipment":{
+      "offhand":{"nbt":"{salvTier:1b,salvWorn:1b}"}, "mainhand":{"tag":"minecraft:planks"}}}}
+  ]
+}

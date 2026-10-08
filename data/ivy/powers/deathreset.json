@@ -1,0 +1,33 @@
+{
+    "$schema": "https://raw.githubusercontent.com/SnaveSutit/origins-mod-json-schemas/refs/heads/schemas/apoli/power.json",
+    "type": "apoli:action_when_damage_taken",
+    "hidden": true,
+    "entity_action": {
+        "type": "apoli:delay",
+        "ticks": 1,
+        "action": {
+            "type": "apoli:if_else",
+            "condition": {"type": "apoli:health","compare_to": 0,"comparison": "<="},
+            "if_action": {
+                "type": "apoli:and","actions": [
+
+                    { "resource": "*:base_integrity", "change": 1000, "operation": "set", "type": "apoli:change_resource" },
+                    { "change": 1000, "resource": "*:energy_energy", "operation": "set", "type": "apoli:change_resource" },
+                    {"change": 0,"resource": "*:energy_powerdown","operation": "set","type": "apoli:change_resource"},
+                    {"change":0,"resource":"*:cybernetics_emergency","operation": "set","type": "apoli:change_resource"},
+                    {"change":0,"resource":"*:cybernetics_armblade","operation": "set","type": "apoli:change_resource"},
+                    {"change":0,"resource":"*:cybernetics_booster","operation": "set","type": "apoli:change_resource"},
+                    {"change":0,"resource":"*:cybernetics_vision","operation": "set","type": "apoli:change_resource"},
+                    {"change":0,"resource":"*:cybernetics_repair","operation": "set","type": "apoli:change_resource"},
+                    {"change":0,"resource":"*:armblade_kitmain","operation": "set","type": "apoli:change_resource"},
+                    {"change":0,"resource":"*:base_repairmain","operation": "set","type": "apoli:change_resource"},
+                    {"change":0,"resource":"*:cybernetics_repair_damagecd","operation": "set","type": "apoli:change_resource"},
+                    {"change":0,"resource":"*:cybernetics_repair_energycd","operation": "set","type": "apoli:change_resource"},
+                    {"change":0,"resource":"*:cybernetics_emergencycd","operation": "set","type": "apoli:change_resource"},
+                    { "type": "apoli:execute_command", "command": "function ivy:death" }
+
+                ]
+            }
+        }
+    }
+}

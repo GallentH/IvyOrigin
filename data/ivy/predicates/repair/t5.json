@@ -1,0 +1,13 @@
+{
+  "condition": "minecraft:any_of",
+  "terms": [
+    {"condition":"minecraft:entity_properties","entity":"this","predicate":{"equipment":{
+      "mainhand":{"nbt":"{kitType:5b}"}, "offhand":{"items":["minecraft:diamond"]}}}},
+    {"condition":"minecraft:entity_properties","entity":"this","predicate":{"equipment":{
+      "offhand":{"nbt":"{kitType:5b}"}, "mainhand":{"items":["minecraft:diamond"]}}}},
+    {"condition":"minecraft:entity_properties","entity":"this","predicate":{"equipment":{
+      "mainhand":{"nbt":"{salvTier:5b,salvWorn:1b}"}, "offhand":{"items":["minecraft:diamond"]}}}},
+    {"condition":"minecraft:entity_properties","entity":"this","predicate":{"equipment":{
+      "offhand":{"nbt":"{salvTier:5b,salvWorn:1b}"}, "mainhand":{"items":["minecraft:diamond"]}}}}
+  ]
+}

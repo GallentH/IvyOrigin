@@ -6,7 +6,7 @@
     "badges": [
         {
             "sprite": "minecraft:textures/item/iron_sword.png",
-            "text": "Arm Blade:\nCan convert vanilla swords into components that can be installed in her arm. These have half the durability and disappear on death, only work with an empty hand, and can be repaired at an anvil."
+            "text": "Arm Blade:\nCan convert vanilla swords into components that can be installed in her arm. These have half the durability and are damaged on death, only work with an empty hand, and can be repaired at an anvil. Can be combined with a mending book to use XP to repair."
         },
         {
             "sprite": "minecraft:textures/mob_effect/speed.png",

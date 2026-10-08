@@ -37,7 +37,6 @@ scoreboard objectives add ivy.cost dummy
 scoreboard objectives add ivy.ingots dummy
 scoreboard objectives add ivy.levels dummy
 
-
 scoreboard players set #ivy.defaults ivy.eHealth 40
 scoreboard players set #ivy.defaults ivy.maxArmor 5
 scoreboard players set #ivy.defaults ivy.maxHPDown 6
@@ -50,3 +49,5 @@ scoreboard players set #1 ivy.const 1
 scoreboard players set #2 ivy.const 2
 scoreboard players set #4 ivy.const 4
 scoreboard players set #10 ivy.const 10
+
+scoreboard players set #rework ivy.const 5

@@ -1,0 +1,13 @@
+{
+  "condition": "minecraft:any_of",
+  "terms": [
+    {"condition":"minecraft:entity_properties","entity":"this","predicate":{"equipment":{
+      "mainhand":{"nbt":"{kitType:4b}"}, "offhand":{"items":["minecraft:gold_ingot"]}}}},
+    {"condition":"minecraft:entity_properties","entity":"this","predicate":{"equipment":{
+      "offhand":{"nbt":"{kitType:4b}"}, "mainhand":{"items":["minecraft:gold_ingot"]}}}},
+    {"condition":"minecraft:entity_properties","entity":"this","predicate":{"equipment":{
+      "mainhand":{"nbt":"{salvTier:4b,salvWorn:1b}"}, "offhand":{"items":["minecraft:gold_ingot"]}}}},
+    {"condition":"minecraft:entity_properties","entity":"this","predicate":{"equipment":{
+      "offhand":{"nbt":"{salvTier:4b,salvWorn:1b}"}, "mainhand":{"items":["minecraft:gold_ingot"]}}}}
+  ]
+}

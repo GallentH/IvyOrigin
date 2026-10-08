@@ -12,7 +12,9 @@
 		"function":"minecraft:set_lore",
 		"entity":"this",
 		"lore":[
-			{"text":"A wooden blade attached to a mechanical frame.\nMade to fit inside a more complex machine.\nA poor, if renewable, choice of material.", "color":"white", "italic":false},
+			{"text":"A wooden blade attached to a mechanical frame.", "color":"white", "italic":false},
+			{"text":"Made to fit inside a more complex machine.", "color":"white", "italic":false},
+			{"text":"A poor, if renewable, choice of material.", "color":"white", "italic":false},
 			[{"text":"Durability: ","color":"gray","italic":false},
 			{"score":{"name":"@s","objective":"ivy.swordDur"},"color":"green","italic":false},
 			{"text":"/30", "color":"gray", "italic":false}]

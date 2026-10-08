@@ -1,0 +1,13 @@
+{
+  "condition": "minecraft:any_of",
+  "terms": [
+    {"condition":"minecraft:entity_properties","entity":"this","predicate":{"equipment":{
+      "mainhand":{"nbt":"{kitType:2b}"}, "offhand":{"tag":"minecraft:stone_tool_materials"}}}},
+    {"condition":"minecraft:entity_properties","entity":"this","predicate":{"equipment":{
+      "offhand":{"nbt":"{kitType:2b}"}, "mainhand":{"tag":"minecraft:stone_tool_materials"}}}},
+    {"condition":"minecraft:entity_properties","entity":"this","predicate":{"equipment":{
+      "mainhand":{"nbt":"{salvTier:2b,salvWorn:1b}"}, "offhand":{"tag":"minecraft:stone_tool_materials"}}}},
+    {"condition":"minecraft:entity_properties","entity":"this","predicate":{"equipment":{
+      "offhand":{"nbt":"{salvTier:2b,salvWorn:1b}"}, "mainhand":{"tag":"minecraft:stone_tool_materials"}}}}
+  ]
+}

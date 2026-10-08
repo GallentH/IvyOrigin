@@ -441,70 +441,8 @@
         "condition": {
             "type": "apoli:and",
             "conditions": [
-                {
-                    "type": "apoli:or",
-                    "conditions": [
-                        {
-                            "type": "apoli:and",
-                            "conditions": [
-                                {
-                                    "type": "apoli:equipped_item",
-                                    "equipment_slot": "mainhand",
-                                    "item_condition": {
-                                        "type": "apoli:nbt",
-                                        "nbt": "{kitType:1b}"
-                                    }
-                                },
-                                {
-                                    "type": "apoli:equipped_item",
-                                    "equipment_slot": "offhand",
-                                    "item_condition": {
-                                        "type": "apoli:or",
-                                        "conditions": [
-                                            { "type": "apoli:ingredient", "ingredient": { "tag": "minecraft:planks" } },
-                                            { "type": "apoli:ingredient", "ingredient": { "tag": "minecraft:stone_tool_materials" } },
-                                            { "type": "apoli:ingredient", "ingredient": { "item": "minecraft:iron_ingot" } },
-                                            { "type": "apoli:ingredient", "ingredient": { "item": "minecraft:gold_ingot" } },
-                                            { "type": "apoli:ingredient", "ingredient": { "item": "minecraft:diamond" } },
-                                            { "type": "apoli:ingredient", "ingredient": { "item": "minecraft:netherite_ingot" } }
-
-                                        ]
-                                    }
-                                }
-                            ]
-                        },
-                        {
-                            "type": "apoli:and",
-                            "conditions": [
-                                {
-                                    "type": "apoli:equipped_item",
-                                    "equipment_slot": "offhand",
-                                    "item_condition": {
-                                        "type": "apoli:nbt",
-                                        "nbt": "{kitType:1b}"
-                                    }
-                                },
-                                {
-                                    "type": "apoli:equipped_item",
-                                    "equipment_slot": "mainhand",
-                                    "item_condition": {
-                                        "type": "apoli:or",
-                                        "conditions": [
-                                            { "type": "apoli:ingredient", "ingredient": { "tag": "minecraft:planks" } },
-                                            { "type": "apoli:ingredient", "ingredient": { "tag": "minecraft:stone_tool_materials" } },
-                                            { "type": "apoli:ingredient", "ingredient": { "item": "minecraft:iron_ingot" } },
-                                            { "type": "apoli:ingredient", "ingredient": { "item": "minecraft:gold_ingot" } },
-                                            { "type": "apoli:ingredient", "ingredient": { "item": "minecraft:diamond" } },
-                                            { "type": "apoli:ingredient", "ingredient": { "item": "minecraft:netherite_ingot" } }
-
-                                        ]
-                                    }
-                                }
-                            ]
-                        }   
-                    ]
-                },
-                {"type": "apoli:xp_levels", "compare_to": 1,"comparison": ">="},
+                { "type": "apoli:predicate", "predicate": "ivy:repair/any" },
+                { "type": "apoli:xp_levels", "compare_to": 1, "comparison": ">=" },
                 { "type": "apoli:resource", "compare_to": 0, "comparison": "==", "resource": "*:*_kitcooldown" }
             ]
         },
@@ -517,7 +455,13 @@
                     {
                         "type": "origins:equipped_item",
                         "equipment_slot": "mainhand",
-                        "item_condition":{"type": "origins:nbt","nbt":"{ivyKit:1b}"}
+                        "item_condition":{
+                            "type": "apoli:or",
+                            "conditions": [
+                                {"type": "origins:nbt","nbt":"{ivyKit:1b}"},
+                                {"type": "origins:nbt","nbt":"{salvWorn:1b}"}
+                            ]
+                        }
                     },
                     "if_action": {"type": "apoli:execute_command","command": "scoreboard players set @s ivy.hand 1"},
                     "else_action": {"type": "apoli:execute_command","command": "scoreboard players set @s ivy.hand 2"}

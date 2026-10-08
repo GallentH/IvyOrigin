@@ -1,0 +1,35 @@
+{
+    "$schema": "https://raw.githubusercontent.com/SnaveSutit/origins-mod-json-schemas/refs/heads/schemas/apoli/power.json",
+    "type": "origins:action_when_damage_taken",
+    "entity_action": {
+        "type": "apoli:delay",
+        "ticks": 1,
+        "action": {
+            "type": "apoli:and",
+            "actions": [
+                {
+                    "type": "apoli:if_else",
+                    "condition": {
+                        "type": "apoli:health",
+                        "compare_to": 0,
+                        "comparison": "<="
+                    },
+                    "if_action": {
+                        "type": "apoli:and",
+                        "actions": [
+                            {
+                                "type": "apoli:execute_command",
+                                "command": "item replace entity @s weapon.mainhand from block 965 93 240 container.0"
+                            },
+
+                            {
+                                "type": "apoli:execute_command",
+                                "command": "item replace entity @e[type=minecraft:item_frame,sort=nearest,limit=1] container.0 from entity @s weapon.mainhand"
+                            }
+                        ]
+                    }
+                }
+            ]
+        }
+    }
+}
