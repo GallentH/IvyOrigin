@@ -68,8 +68,8 @@
                     "resource":"*:cybernetics_vision",
                     "change":0,
                     "operation":"set" 
-                }
-
+                },
+                {"type":"apoli:execute_command","command":"function ivy:sync/powers"}
             ]
         }
     },
@@ -176,7 +176,8 @@
                         "change": 0,
                         "operation": "set",
                         "resource": "*:cybernetics_emergency"
-                    }
+                    },
+                    {"type":"apoli:execute_command","command":"function ivy:sync/powers"}
                 ]
             }
         }

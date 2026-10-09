@@ -51,3 +51,23 @@ scoreboard players set #4 ivy.const 4
 scoreboard players set #10 ivy.const 10
 
 scoreboard players set #rework ivy.const 5
+
+
+#Figura sync variables
+scoreboard objectives add ivy.figura trigger
+#sent relatively often
+scoreboard objectives add ivy.sInt dummy
+scoreboard objectives add ivy.sEn dummy
+scoreboard objectives add ivy.sDur dummy
+#to check for changes
+scoreboard objectives add ivy.lInt dummy
+scoreboard objectives add ivy.lEn dummy
+scoreboard objectives add ivy.lDur dummy
+#sent infrequently, but also with every major power trigger
+scoreboard objectives add ivy.sFlags dummy
+scoreboard objectives add ivy.sSel dummy
+scoreboard objectives add ivy.sTier dummy
+#again, to check for changes
+scoreboard objectives add ivy.lFlags dummy
+scoreboard objectives add ivy.lSel dummy
+scoreboard objectives add ivy.lTier dummy

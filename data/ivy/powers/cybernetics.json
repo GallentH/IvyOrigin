@@ -34,146 +34,152 @@
     "primary": {
         "type": "origins:active_self",
         "entity_action": {
-            "type": "origins:if_else_list",
+            "type": "apoli:and",
             "actions": [
                 {
-                    "condition": {
-                        "type": "origins:or",
-                        "conditions": [
-                            {
-                                "type": "origins:resource",
-                                "resource": "*:*_selector",
-                                "comparison": "==",
-                                "compare_to": 4
+                    "type": "origins:if_else_list",
+                    "actions": [
+                        {
+                            "condition": {
+                                "type": "origins:or",
+                                "conditions": [
+                                    {
+                                        "type": "origins:resource",
+                                        "resource": "*:*_selector",
+                                        "comparison": "==",
+                                        "compare_to": 4
+                                    },
+                                    {
+                                        "type": "origins:resource",
+                                        "resource": "*:energy_powerdown",
+                                        "comparison": "==",
+                                        "compare_to": 1
+                                    }
+                                ]
                             },
-                            {
-                                "type": "origins:resource",
-                                "resource": "*:energy_powerdown",
-                                "comparison": "==",
-                                "compare_to": 1
-                            }
-                        ]
-                    },
-                    "action": {
-                        "type": "origins:if_else",
-                        "condition": {
-                            "type":"origins:and",
-                            "conditions":[
-                                {
-                                    "type": "origins:resource",
+                            "action": {
+                                "type": "origins:if_else",
+                                "condition": {
+                                    "type":"origins:and",
+                                    "conditions":[
+                                        {
+                                            "type": "origins:resource",
+                                            "resource": "*:*_repair",
+                                            "comparison": "==",
+                                            "compare_to": 0
+                                        },
+                                        {
+                                            "type":"origins:resource",
+                                            "resource":"*:*_repair_energycd",
+                                            "comparison":"==",
+                                            "compare_to":0
+                                        },
+                                        {
+                                            "type":"origins:resource",
+                                            "resource":"*:*_repair_damagecd",
+                                            "comparison":"==",
+                                            "compare_to":0
+                                        },
+                                        {
+                                            "type": "apoli:resource",
+                                            "compare_to": 50,
+                                            "comparison": ">=",
+                                            "resource": "*:energy_energy"
+                                        },
+                                        {
+                                            "type": "apoli:resource",
+                                            "compare_to": 750,
+                                            "comparison": "<",
+                                            "resource": "*:base_integrity"
+                                        }
+                                    ]
+                                },
+                                "if_action":{
+                                    "type":"origins:change_resource",
+                                    "change":1,
                                     "resource": "*:*_repair",
+                                    "operation":"set"
+                                },
+                                "else_action":{
+                                    "type":"origins:change_resource",
+                                    "change":0,
+                                    "resource": "*:*_repair",
+                                    "operation":"set"
+                                }
+                            }
+                        },
+                        {
+                            "condition": {
+                                "type":"apoli:and",
+                                "conditions": [
+                                    {
+                                        "type": "origins:resource",
+                                        "resource": "*:*_selector",
+                                        "comparison": "==",
+                                        "compare_to": 1
+                                    },
+                                    {
+                                        "type": "apoli:resource",
+                                        "resource": "*:energy_energy",
+                                        "compare_to": 100,
+                                        "comparison": ">"
+                                    }
+                                ]
+                            },
+                            "action": {
+                                "type": "origins:if_else",
+                                "condition": {
+                                    "type": "origins:resource",
+                                    "resource": "*:*_armblade",
                                     "comparison": "==",
                                     "compare_to": 0
                                 },
-                                {
-                                    "type":"origins:resource",
-                                    "resource":"*:*_repair_energycd",
-                                    "comparison":"==",
-                                    "compare_to":0
+                                "if_action":{
+                                    "type": "origins:and",
+                                    "actions": [
+                                        {
+                                            "type":"origins:change_resource",
+                                            "resource": "*:*_armblade",
+                                            "change":1,
+                                            "operation":"set"
+                                        },
+                                        {
+                                            "type": "apoli:change_resource",
+                                            "resource": "*:energy_energy",
+                                            "change": -100,
+                                            "operation": "add"
+                                        }
+                                    ]
                                 },
-                                {
-                                    "type":"origins:resource",
-                                    "resource":"*:*_repair_damagecd",
-                                    "comparison":"==",
-                                    "compare_to":0
-                                },
-                                {
-                                    "type": "apoli:resource",
-                                    "compare_to": 50,
-                                    "comparison": ">=",
-                                    "resource": "*:energy_energy"
-                                },
-                                {
-                                    "type": "apoli:resource",
-                                    "compare_to": 750,
-                                    "comparison": "<",
-                                    "resource": "*:base_integrity"
-                                }
-                            ]
-                        },
-                        "if_action":{
-                            "type":"origins:change_resource",
-                            "change":1,
-                            "resource": "*:*_repair",
-                            "operation":"set"
-                        },
-                        "else_action":{
-                            "type":"origins:change_resource",
-                            "change":0,
-                            "resource": "*:*_repair",
-                            "operation":"set"
-                        }
-                    }
-                },
-                {
-                    "condition": {
-                        "type":"apoli:and",
-                        "conditions": [
-                            {
-                                "type": "origins:resource",
-                                "resource": "*:*_selector",
-                                "comparison": "==",
-                                "compare_to": 1
-                            },
-                            {
-                                "type": "apoli:resource",
-                                "resource": "*:energy_energy",
-                                "compare_to": 100,
-                                "comparison": ">"
-                            }
-                        ]
-                    },
-                    "action": {
-                        "type": "origins:if_else",
-                        "condition": {
-                            "type": "origins:resource",
-                            "resource": "*:*_armblade",
-                            "comparison": "==",
-                            "compare_to": 0
-                        },
-                        "if_action":{
-                            "type": "origins:and",
-                            "actions": [
-                                {
+                                "else_action":{
                                     "type":"origins:change_resource",
                                     "resource": "*:*_armblade",
-                                    "change":1,
+                                    "change":0,
                                     "operation":"set"
-                                },
-                                {
-                                    "type": "apoli:change_resource",
-                                    "resource": "*:energy_energy",
-                                    "change": -100,
-                                    "operation": "add"
                                 }
-                            ]
+                            }
                         },
-                        "else_action":{
-                            "type":"origins:change_resource",
-                            "resource": "*:*_armblade",
-                            "change":0,
-                            "operation":"set"
+                        {
+                            "condition": { "compare_to": 2, "type": "origins:resource", "resource": "*:*_selector", "comparison": "==" },
+                            "action": {
+                                "type": "origins:if_else",
+                                "condition": { "resource": "*:*_booster", "comparison": "==", "compare_to": 0, "type": "origins:resource" },
+                                "if_action":{ "resource": "*:*_booster", "change":1, "operation":"set", "type":"origins:change_resource" },
+                                "else_action":{ "resource": "*:*_booster", "change":0, "operation":"set", "type":"origins:change_resource" }
+                            }
+                        },
+                        {
+                            "condition": { "compare_to": 3, "type": "origins:resource", "resource": "*:*_selector", "comparison": "==" },
+                            "action": {
+                                "type": "origins:if_else",
+                                "condition": { "resource": "*:*_vision", "comparison": "==", "compare_to": 0, "type": "origins:resource" },
+                                "if_action":{ "resource": "*:*_vision", "change":1, "operation":"set", "type":"origins:change_resource" },
+                                "else_action":{ "resource": "*:*_vision", "change":0, "operation":"set", "type":"origins:change_resource" }
+                            }
                         }
-                    }
+                    ]
                 },
-                {
-                    "condition": { "compare_to": 2, "type": "origins:resource", "resource": "*:*_selector", "comparison": "==" },
-                    "action": {
-                        "type": "origins:if_else",
-                        "condition": { "resource": "*:*_booster", "comparison": "==", "compare_to": 0, "type": "origins:resource" },
-                        "if_action":{ "resource": "*:*_booster", "change":1, "operation":"set", "type":"origins:change_resource" },
-                        "else_action":{ "resource": "*:*_booster", "change":0, "operation":"set", "type":"origins:change_resource" }
-                    }
-                },
-                {
-                    "condition": { "compare_to": 3, "type": "origins:resource", "resource": "*:*_selector", "comparison": "==" },
-                    "action": {
-                        "type": "origins:if_else",
-                        "condition": { "resource": "*:*_vision", "comparison": "==", "compare_to": 0, "type": "origins:resource" },
-                        "if_action":{ "resource": "*:*_vision", "change":1, "operation":"set", "type":"origins:change_resource" },
-                        "else_action":{ "resource": "*:*_vision", "change":0, "operation":"set", "type":"origins:change_resource" }
-                    }
-                }
+                {"type":"apoli:execute_command","command":"function ivy:sync/powers"}
             ]
         }
     },
@@ -322,89 +328,95 @@
             "key": "key.origins.secondary_active"
         },
         "entity_action": {
-            "type": "origins:if_else_list",
-            "actions": [
+            "type":"apoli:and",
+            "actions":[
                 {
-                    "condition": {"type": "apoli:resource","compare_to": 1,"comparison": "==","resource": "*:energy_powerdown"},
-                    "action": {
-                        "type": "apoli:if_else",
-                        "condition": {
-                            "type": "apoli:and",
-                            "conditions": [
-                                {"type": "apoli:resource","compare_to": 0,"comparison": "==","resource": "*:*_emergency"},
-                                {"type": "apoli:resource","compare_to": 0,"comparison": "==","resource": "*:*_emergencycd"}
-                            ]
+                    "type": "origins:if_else_list",
+                    "actions": [
+                        {
+                            "condition": {"type": "apoli:resource","compare_to": 1,"comparison": "==","resource": "*:energy_powerdown"},
+                            "action": {
+                                "type": "apoli:if_else",
+                                "condition": {
+                                    "type": "apoli:and",
+                                    "conditions": [
+                                        {"type": "apoli:resource","compare_to": 0,"comparison": "==","resource": "*:*_emergency"},
+                                        {"type": "apoli:resource","compare_to": 0,"comparison": "==","resource": "*:*_emergencycd"}
+                                    ]
+                                },
+                                "if_action": {
+                                    "type": "apoli:change_resource",
+                                    "change": 1,
+                                    "operation": "set",
+                                    "resource": "*:*_emergency"
+                                },
+                                "else_action": {
+                                    "type": "apoli:change_resource",
+                                    "change": 0,
+                                    "operation": "set",
+                                    "resource": "*:*_emergency"
+                                }
+                            }
                         },
-                        "if_action": {
-                            "type": "apoli:change_resource",
-                            "change": 1,
-                            "operation": "set",
-                            "resource": "*:*_emergency"
-                        },
-                        "else_action": {
-                            "type": "apoli:change_resource",
-                            "change": 0,
-                            "operation": "set",
-                            "resource": "*:*_emergency"
-                        }
-                    }
-                },
-                {
-                    "action": {
-                        "type": "origins:change_resource",
-                        "resource": "*:*_selector",
-                        "change": 4,
-                        "operation": "set"
-                    },
-                    "condition": {
-                        "type": "origins:and",
-                        "conditions": [
-                            {
-                                "type": "origins:sneaking"
+                        {
+                            "action": {
+                                "type": "origins:change_resource",
+                                "resource": "*:*_selector",
+                                "change": 4,
+                                "operation": "set"
                             },
-                            {
+                            "condition": {
+                                "type": "origins:and",
+                                "conditions": [
+                                    {
+                                        "type": "origins:sneaking"
+                                    },
+                                    {
+                                        "type": "origins:resource",
+                                        "resource": "*:*_selector",
+                                        "compare_to": 1,
+                                        "comparison": "<="
+                                    }
+                                ]
+                            }
+                        },
+                        {
+                            "action": {
+                                "type": "origins:change_resource",
+                                "resource": "*:*_selector",
+                                "change": -1,
+                                "operation": "add"
+                            },
+                            "condition": {
+                                "type": "origins:sneaking"
+                            }
+                        },
+                        {
+                            "action": {
+                                "type": "origins:change_resource",
+                                "resource": "*:*_selector",
+                                "change": 1,
+                                "operation": "set"
+                            },
+                            "condition": {
                                 "type": "origins:resource",
                                 "resource": "*:*_selector",
-                                "compare_to": 1,
-                                "comparison": "<="
+                                "compare_to": 4,
+                                "comparison": ">="
                             }
-                        ]
-                    }
+                        },
+                        {
+                            "action": {
+                                "type": "origins:change_resource",
+                                "resource": "*:*_selector",
+                                "change": 1,
+                                "operation": "add"
+                            },
+                            "condition": { "type": "origins:constant", "value": true }
+                        }
+                    ]
                 },
-                {
-                    "action": {
-                        "type": "origins:change_resource",
-                        "resource": "*:*_selector",
-                        "change": -1,
-                        "operation": "add"
-                    },
-                    "condition": {
-                        "type": "origins:sneaking"
-                    }
-                },
-                {
-                    "action": {
-                        "type": "origins:change_resource",
-                        "resource": "*:*_selector",
-                        "change": 1,
-                        "operation": "set"
-                    },
-                    "condition": {
-                        "type": "origins:resource",
-                        "resource": "*:*_selector",
-                        "compare_to": 4,
-                        "comparison": ">="
-                    }
-                },
-                {
-                    "action": {
-                        "type": "origins:change_resource",
-                        "resource": "*:*_selector",
-                        "change": 1,
-                        "operation": "add"
-                    },
-                    "condition": { "type": "origins:constant", "value": true }
-                }
+                {"type":"apoli:execute_command","command":"function ivy:sync/powers"}
             ]
         }
     },
