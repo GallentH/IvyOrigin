@@ -38,7 +38,8 @@
                 {
                     "type": "apoli:execute_command",
                     "command": "title @s actionbar {\"text\":\"Your Armblade has shattered.\",\"color\":\"red\"}"
-                }
+                },
+                {"type":"apoli:execute_command","command":"function ivy:sync/powers"}
             ]
         }
     },

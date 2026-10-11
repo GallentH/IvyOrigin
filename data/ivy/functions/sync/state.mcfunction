@@ -7,8 +7,6 @@ execute if score @s ivy.figura matches 2 run scoreboard players set @s ivy.figur
 execute if score @s ivy.lFlags matches -1 run function ivy:sync/powers
 
 execute store result score @s ivy.sInt run resource get @s ivy:base_integrity
-
-execute store result score @s ivy.sInt run resource get @s ivy:base_integrity
 execute store result score @s ivy.sEn run resource get @s ivy:energy_energy
 execute store result score @s ivy.sDur run resource get @s ivy:armblade_durval
 execute if score @s ivy.sInt = @s ivy.lInt if score @s ivy.sEn = @s ivy.lEn if score @s ivy.sDur = @s ivy.lDur run return 0

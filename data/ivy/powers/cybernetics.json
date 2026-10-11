@@ -317,7 +317,8 @@
                 {
                     "type": "apoli:trigger_cooldown",
                     "power": "*:*_emergencycd"
-                }
+                },
+                {"type":"apoli:execute_command","command":"function ivy:sync/powers"}
             ]
         }
     },
@@ -650,7 +651,8 @@
                 {
                     "type":"origins:trigger_cooldown",
                     "power":"*:*_repair_damagecd"
-                }
+                },
+                {"type":"apoli:execute_command","command":"function ivy:sync/powers"}
             ]
         },
         "condition":{
@@ -687,5 +689,34 @@
                 "compare_to": 0
             }
         }
+    },
+    "repair_limit":{
+        "type": "apoli:action_over_time",
+        "condition": {
+            "type":"apoli:and",
+            "conditions":
+            [
+                {
+                    "type": "apoli:resource",
+                    "compare_to": 750,
+                    "comparison": ">=",
+                    "resource": "*:base_integrity"
+                },
+                {
+                    "type": "apoli:resource",
+                    "compare_to": 1,
+                    "comparison": "==",
+                    "resource": "*:*_repair"
+                }
+            ]
+        },
+        "falling_action": {
+            "type": "apoli:and",
+            "actions": [
+                {"type": "apoli:change_resource","change": 0,"resource": "*:*_repair","operation": "set"},
+                {"type":"apoli:execute_command","command":"function ivy:sync/powers"}
+            ]
+        }
+
     }
 }

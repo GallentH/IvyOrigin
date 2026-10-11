@@ -21,5 +21,11 @@
             "type":"apoli:execute_command",
             "command": "function ivy:sync/powers"
         }
+    },
+
+    "events":{
+        "type": "apoli:action_on_callback",
+        "entity_action_added": {"type":"apoli:execute_command","command":"function ivy:sync/state"},
+        "entity_action_removed": {"type":"apoli:execute_command","command": "trigger ivy.figura set 0"}
     }
 }

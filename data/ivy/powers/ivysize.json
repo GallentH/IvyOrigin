@@ -4,6 +4,10 @@
         "type":"origins:execute_command",
         "command": "function ivy:ivysize"
     },
+    "entity_action_respawned":{
+        "type":"origins:execute_command",
+        "command": "function ivy:ivysize"
+    },
     "entity_action_lost":{
         "type":"origins:execute_command",
         "command":"function ivy:sizereset"
