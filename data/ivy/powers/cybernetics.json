@@ -219,7 +219,7 @@
     "weakened":{
         "type": "apoli:conditioned_attribute",
         "tick_rate": 5,
-        "condition": {"type": "apoli:resource","compare_to": 1,"comparison": "==","resource": "*:energy_powerdown"},
+        "condition": {"type": "apoli:resource","compare_to": 1,"comparison": "==","resource": "*:cybernetics_emergency"},
         "modifiers": [
             {
                 "attribute": "minecraft:generic.attack_speed",
