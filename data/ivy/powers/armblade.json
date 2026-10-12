@@ -103,6 +103,12 @@
                     "item_condition": {
                         "type": "apoli:empty"
                     }
+                },
+                {
+                    "type": "apoli:resource",
+                    "resource": "*:*_tier",
+                    "compare_to": 0,
+                    "comparison": ">"
                 }
             ]
         }

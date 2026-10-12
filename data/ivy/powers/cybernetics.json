@@ -129,10 +129,21 @@
                             "action": {
                                 "type": "origins:if_else",
                                 "condition": {
-                                    "type": "origins:resource",
-                                    "resource": "*:*_armblade",
-                                    "comparison": "==",
-                                    "compare_to": 0
+                                    "type": "apoli:and",
+                                    "conditions": [
+                                        {
+                                            "type": "origins:resource",
+                                            "resource": "*:*_armblade",
+                                            "comparison": "==",
+                                            "compare_to": 0
+                                        },
+                                        {
+                                            "type": "apoli:resource",
+                                            "resource": "*:armblade_tier",
+                                            "compare_to": 0,
+                                            "comparison": ">"
+                                        }
+                                    ]
                                 },
                                 "if_action":{
                                     "type": "origins:and",
